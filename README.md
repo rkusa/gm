@@ -15,6 +15,7 @@ Really empty for now; just getting this project started. New functions will be i
 function | scalar | amd64 | 386 | arm
 -------- | ------ | ----- | --- | -----
 Add      | ✓      | ✓     | ✗   | ✗
+Mul      | ✓      | ✓     | ✗   | ✗
 
 ## Benchmarks
 
@@ -25,4 +26,5 @@ Benchmarks are done on a MacBook Pro (Early 2015, 2.9GHz Intel Core i5)
 function | scalar         | SIMD
 -------- | -------------- | ----------
 Add      | **2.29 ns/op** | 3.61 ns/op
+Mul      | **2.76 ns/op** | 8.92 ns/op
 

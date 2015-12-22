@@ -24,3 +24,22 @@ func BenchmarkAdd(b *testing.B) {
 		lhs.Add(rhs)
 	}
 }
+func TestMul(t *testing.T) {
+	lhs := &Vec4{1, 2, 3, 4}
+	var rhs float32 = 2.5
+
+	lhs.Mul(rhs)
+	if !reflect.DeepEqual(lhs, &Vec4{2.5, 5, 7.5, 10}) {
+		t.Fatalf("Mul wrong result, got: %v", lhs)
+	}
+}
+
+func BenchmarkMul(b *testing.B) {
+	lhs := &Vec4{1, 2, 3, 4}
+	var rhs float32 = 2.5
+	b.ResetTimer()
+
+	for n := 0; n < b.N; n++ {
+		lhs.Mul(rhs)
+	}
+}
