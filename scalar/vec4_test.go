@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestAdd(t *testing.T) {
+func TestVec4Add(t *testing.T) {
 	lhs := &Vec4{1, 2, 3, 4}
 	rhs := &Vec4{5, 6, 7, 8}
 	lhs.Add(rhs)
@@ -21,7 +21,7 @@ func TestAdd(t *testing.T) {
 	}
 }
 
-func BenchmarkAdd(b *testing.B) {
+func BenchmarkVec4Add(b *testing.B) {
 	lhs := &Vec4{1, 2, 3, 4}
 	rhs := &Vec4{5, 6, 7, 8}
 	b.ResetTimer()
@@ -31,7 +31,7 @@ func BenchmarkAdd(b *testing.B) {
 	}
 }
 
-func TestMul(t *testing.T) {
+func TestVec4Mul(t *testing.T) {
 	lhs := &Vec4{1, 2, 3, 4}
 	var rhs float32 = 2.5
 	lhs.Mul(rhs)
@@ -40,7 +40,7 @@ func TestMul(t *testing.T) {
 	}
 }
 
-func BenchmarkMul(b *testing.B) {
+func BenchmarkVec4Mul(b *testing.B) {
 	lhs := &Vec4{1, 2, 3, 4}
 	var rhs float32 = 2.5
 	b.ResetTimer()

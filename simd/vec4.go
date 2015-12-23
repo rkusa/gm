@@ -3,13 +3,13 @@ package simd
 type Vec4 [4]float32
 
 func (lhs *Vec4) Add(rhs *Vec4) {
-	add(lhs, rhs)
+	addVec4(lhs, rhs)
 }
 
-func add(lhs, rhs *Vec4) Vec4
+func addVec4(lhs, rhs *Vec4) Vec4
 
 func (lhs *Vec4) Mul(rhs float32) {
-	mul(lhs, rhs)
+	mulVec4(lhs, rhs)
 }
 
-func mul(lhs *Vec4, rhs float32)
+func mulVec4(lhs *Vec4, rhs float32)

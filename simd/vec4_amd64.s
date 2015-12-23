@@ -1,5 +1,5 @@
-// func add(lhs, rhs *Vec4)
-TEXT ·add(SB),NOSPLIT,$0
+// func addVec4(lhs, rhs *Vec4)
+TEXT ·addVec4(SB),NOSPLIT,$0
   // load pointers into registers
   MOVQ lhs+0(FP), R8
   MOVQ rhs+8(FP), R9
@@ -15,8 +15,8 @@ TEXT ·add(SB),NOSPLIT,$0
   MOVUPS X0, (R8)
   RET
 
-// func mul(lhs *Vec4, rhs float32)
-TEXT ·mul(SB),NOSPLIT,$0
+// func mulVec4(lhs *Vec4, rhs float32)
+TEXT ·mulVec4(SB),NOSPLIT,$0
   // load vector
   MOVQ lhs+0(FP), R8
   MOVUPS (R8), X0

@@ -17,6 +17,12 @@ function | scalar | amd64 | 386 | arm
 Add      | ✓      | ✓     | ✗   | ✗
 Mul      | ✓      | ✓     | ✗   | ✗
 
+#### Mat4
+
+function | scalar | amd64 | 386 | arm
+-------- | ------ | ----- | --- | -----
+Mul      | ✓      | ✓     | ✗   | ✗
+
 ## Benchmarks
 
 Benchmarks are done on a MacBook Pro (Early 2015, 2.9GHz Intel Core i5)
@@ -24,7 +30,13 @@ Benchmarks are done on a MacBook Pro (Early 2015, 2.9GHz Intel Core i5)
 #### Vec3
 
 function | scalar         | SIMD
--------- | -------------- | ----------
+-------- | -------------- | --------------
 Add      | **2.29 ns/op** | 3.61 ns/op
 Mul      | **2.76 ns/op** | 8.92 ns/op
+
+#### Mat4
+
+function | scalar         | SIMD
+-------- | -------------- | --------------
+Mul      | 30.9 ns/op     | **12.3 ns/op**
 
