@@ -12,6 +12,12 @@
 
 Really empty for now; just getting this project started. New functions will be implemented once I need them.
 
+#### Vec3
+
+function | scalar | amd64 | 386 | arm
+-------- | ------ | ----- | --- | -----
+Sub      | ✓      | ✓     | ✗   | ✗
+
 #### Vec4
 
 function | scalar | amd64 | 386 | arm
