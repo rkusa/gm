@@ -8,7 +8,6 @@
 package math32_test
 
 import (
-	"math"
 	"testing"
 
 	. "./"
@@ -26,6 +25,7 @@ var vf = []float32{
 	1.8253080916808550e+00,
 	-8.6859247685756013e+00,
 }
+
 var copysign = []float32{
 	-4.9790119248836735e+00,
 	-7.7388724745781045e+00,
@@ -37,6 +37,30 @@ var copysign = []float32{
 	-2.7279399104360102e+00,
 	-1.8253080916808550e+00,
 	-8.6859247685756013e+00,
+}
+var fabs = []float32{
+	4.9790119248836735e+00,
+	7.7388724745781045e+00,
+	2.7688005719200159e-01,
+	5.0106036182710749e+00,
+	9.6362937071984173e+00,
+	2.9263772392439646e+00,
+	5.2290834314593066e+00,
+	2.7279399104360102e+00,
+	1.8253080916808550e+00,
+	8.6859247685756013e+00,
+}
+var sqrt = []float32{
+	2.2313699855653004178179799e+00,
+	2.7818829105618685382239619e+00,
+	5.2619393351308207940064676e-01,
+	2.2384377203502809905444337e+00,
+	3.104237975937876203857968e+00,
+	1.7106657465582673083304144e+00,
+	2.2867189460131345235538447e+00,
+	1.6516476149988743582497364e+00,
+	1.3510396309834566963559155e+00,
+	2.9471892592823585310668477e+00,
 }
 var tan = []float32{
 	-3.661316565040227801781974e+00,
@@ -51,6 +75,21 @@ var tan = []float32{
 	9.10988793377685105753416e-01,
 }
 
+var vffabsSC = []float32{
+	Inf(-1),
+	Copysign(0, -1),
+	0,
+	Inf(1),
+	NaN(),
+}
+var fabsSC = []float32{
+	Inf(1),
+	0,
+	0,
+	Inf(1),
+	NaN(),
+}
+
 var vfcopysignSC = []float32{
 	Inf(-1),
 	Inf(1),
@@ -61,6 +100,7 @@ var copysignSC = []float32{
 	Inf(-1),
 	NaN(),
 }
+
 var vfsinSC = []float32{
 	Inf(-1),
 	Copysign(0, -1),
@@ -73,6 +113,23 @@ var sinSC = []float32{
 	Copysign(0, -1),
 	0,
 	NaN(),
+	NaN(),
+}
+
+var vfsqrtSC = []float32{
+	Inf(-1),
+	-Pi,
+	Copysign(0, -1),
+	0,
+	Inf(1),
+	NaN(),
+}
+var sqrtSC = []float32{
+	NaN(),
+	NaN(),
+	Copysign(0, -1),
+	0,
+	Inf(1),
 	NaN(),
 }
 
@@ -103,6 +160,19 @@ func alike(a, b float32) bool {
 	return false
 }
 
+func TestAbs(t *testing.T) {
+	for i := 0; i < len(vf); i++ {
+		if f := Abs(vf[i]); fabs[i] != f {
+			t.Errorf("Abs(%g) = %g, want %g", vf[i], f, fabs[i])
+		}
+	}
+	for i := 0; i < len(vffabsSC); i++ {
+		if f := Abs(vffabsSC[i]); !alike(fabsSC[i], f) {
+			t.Errorf("Abs(%g) = %g, want %g", vffabsSC[i], f, fabsSC[i])
+		}
+	}
+}
+
 func TestCopysign(t *testing.T) {
 	for i := 0; i < len(vf); i++ {
 		if f := Copysign(vf[i], -1); copysign[i] != f {
@@ -121,6 +191,27 @@ func TestCopysign(t *testing.T) {
 	}
 }
 
+func TestSqrt(t *testing.T) {
+	for i := 0; i < len(vf); i++ {
+		// a := Abs(vf[i])
+		// if f := SqrtGo(a); sqrt[i] != f {
+		// 	t.Errorf("SqrtGo(%g) = %g, want %g", a, f, sqrt[i])
+		// }
+		a := Abs(vf[i])
+		if f := Sqrt(a); sqrt[i] != f {
+			t.Errorf("Sqrt(%g) = %g, want %g", a, f, sqrt[i])
+		}
+	}
+	for i := 0; i < len(vfsqrtSC); i++ {
+		// if f := SqrtGo(vfsqrtSC[i]); !alike(sqrtSC[i], f) {
+		// 	t.Errorf("SqrtGo(%g) = %g, want %g", vfsqrtSC[i], f, sqrtSC[i])
+		// }
+		if f := Sqrt(vfsqrtSC[i]); !alike(sqrtSC[i], f) {
+			t.Errorf("Sqrt(%g) = %g, want %g", vfsqrtSC[i], f, sqrtSC[i])
+		}
+	}
+}
+
 func TestTan(t *testing.T) {
 	for i := 0; i < len(vf); i++ {
 		if f := Tan(vf[i]); !veryclose(tan[i], f) {
@@ -132,25 +223,5 @@ func TestTan(t *testing.T) {
 		if f := Tan(vfsinSC[i]); !alike(sinSC[i], f) {
 			t.Errorf("Tan(%g) = %g, want %g", vfsinSC[i], f, sinSC[i])
 		}
-	}
-}
-
-func BenchmarkTanFloat64(b *testing.B) {
-	count := len(vf)
-
-	for n := 0; n < b.N; n++ {
-		res := float32(math.Tan(float64(vf[n%count])))
-		// work arround "evaluated but not used" error
-		_ = res
-	}
-}
-
-func BenchmarkTanFloat32(b *testing.B) {
-	count := len(vf)
-
-	for n := 0; n < b.N; n++ {
-		res := Tan(vf[n%count])
-		// work arround "evaluated but not used" error
-		_ = res
 	}
 }

@@ -29,5 +29,6 @@ Perspective | 23.3 ns/op
 
 function | math (float64) | math32 (float32)
 -------- | -------------- | ----------------
+Abs      | 12.2 ns/op     | 12.5 ns/op
+Sqrt     | 10.1 ns/op     | 10.3 ns/op
 Tan      | 30.2 ns/op     | **25.9 ns/op**
-

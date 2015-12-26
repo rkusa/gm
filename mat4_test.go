@@ -58,7 +58,7 @@ func benchmarkMat4Mul(b *testing.B, mul func(lhs, rhs *Mat4)) {
 
 func TestMat4Perspective(t *testing.T) {
 	m := Mat4{}
-	m.Perspective(math32.PI/4, 1920.0/1080, .1, 100)
+	m.Perspective(math32.Pi/4, 1920.0/1080, .1, 100)
 
 	expectation := Mat4{
 		1.357995, 0, 0, 0,
@@ -76,6 +76,6 @@ func BenchmarkMat4Perspective(b *testing.B) {
 	b.ResetTimer()
 
 	for n := 0; n < b.N; n++ {
-		m.Perspective(math32.PI/4, 1920.0/1080, .1, 100)
+		m.Perspective(math32.Pi/4, 1920.0/1080, .1, 100)
 	}
 }
