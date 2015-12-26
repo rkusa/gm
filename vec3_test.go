@@ -5,6 +5,16 @@ import (
 	"testing"
 )
 
+func TestVec3Cross(t *testing.T) {
+	lhs := &Vec3{1, 2, 3}
+	rhs := &Vec3{4, 5, 6}
+
+	lhs.Cross(rhs)
+	if !reflect.DeepEqual(lhs, &Vec3{-3, 6, -3}) {
+		t.Fatalf("Cross wrong result, got: %v", lhs)
+	}
+}
+
 func TestVec3Len(t *testing.T) {
 	lhs := &Vec3{1, 2, 3}
 	length := lhs.Len()
