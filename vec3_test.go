@@ -5,6 +5,15 @@ import (
 	"testing"
 )
 
+func TestVec3Len(t *testing.T) {
+	lhs := &Vec3{1, 2, 3}
+	length := lhs.Len()
+
+	if length != 3.7416575 {
+		t.Fatalf("Len wrong result, got: %v", length)
+	}
+}
+
 func TestVec3SubScalar(t *testing.T) {
 	testVec3Sub(t, vec3SubScalar)
 }
