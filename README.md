@@ -6,11 +6,13 @@
 - reimplement (only the ones needed) std math `float32` (instead of converting them to `float64`)
 - both scalar and SIMD calculations are implemented, but only the faster one is exported
 
+[Benchmarks](BENCHMARKS.md)
+
 ## Implemented
 
 Really empty for now; just getting this project started. New functions will be implemented once I need them.
 
-#### Vec3
+#### Vec4
 
 function | scalar | amd64 | 386 | arm
 -------- | ------ | ----- | --- | -----
@@ -23,20 +25,4 @@ function | scalar | amd64 | 386 | arm
 -------- | ------ | ----- | --- | -----
 Mul      | ✓      | ✓     | ✗   | ✗
 
-## Benchmarks
-
-Benchmarks are done on a MacBook Pro (Early 2015, 2.9GHz Intel Core i5)
-
-#### Vec3
-
-function | scalar         | SIMD
--------- | -------------- | --------------
-Add      | **2.29 ns/op** | 3.61 ns/op
-Mul      | **2.76 ns/op** | 8.92 ns/op
-
-#### Mat4
-
-function | scalar         | SIMD
--------- | -------------- | --------------
-Mul      | 30.9 ns/op     | **12.3 ns/op**
 

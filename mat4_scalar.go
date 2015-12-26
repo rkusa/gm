@@ -1,13 +1,14 @@
-package scalar
+package ml
 
-type Mat4 [16]float32
+func mat4MulScalar(out, rhs *Mat4) {
+	// lhs := Mat4{out...}
+	lhs := Mat4{
+		out[0], out[1], out[2], out[3],
+		out[4], out[5], out[6], out[7],
+		out[8], out[9], out[10], out[11],
+		out[12], out[13], out[14], out[15],
+	}
 
-func (lhs *Mat4) Mul(rhs *Mat4) {
-	// copy lhs for calculation purposes
-	mul(lhs, *lhs, rhs)
-}
-
-func mul(out *Mat4, lhs Mat4, rhs *Mat4) {
 	// if multiplicated with itself
 	if out == rhs {
 		rhs = &lhs

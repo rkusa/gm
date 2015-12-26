@@ -5,7 +5,7 @@ test:
 	go test ./...
 
 bench:
-	cd scalar && go test -bench=.
-	cd simd && go test -bench=.
+	go test -bench=.
+	cd math32 && go test -bench=.
 
 .PHONY: test bench
