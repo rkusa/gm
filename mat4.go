@@ -23,3 +23,18 @@ func (out *Mat4) Perspective(fovy, aspect, near, far float32) {
 	out[14] = (2 * far * near) / nf
 	out[15] = 0
 }
+
+func (out *Mat4) LookAt(eye, center, up *Vec3) {
+	// f := center.Sub(eye).Normalize()
+	// s := f.Cross(up.Normalize()).Normalize()
+	// u := s.Cross(f)
+
+	// M := Mat4{
+	// 	s[0], u[0], -f[0], 0,
+	// 	s[1], u[1], -f[1], 0,
+	// 	s[2], u[2], -f[2], 0,
+	// 	0, 0, 0, 1,
+	// }
+
+	// return M.Mul4(Translate3D(float32(-eye[0]), float32(-eye[1]), float32(-eye[2])))
+}

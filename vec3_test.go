@@ -14,6 +14,15 @@ func TestVec3Len(t *testing.T) {
 	}
 }
 
+func TestVec3Normalize(t *testing.T) {
+	lhs := &Vec3{1, 2, 3}
+	lhs.Normalize()
+
+	if !reflect.DeepEqual(lhs, &Vec3{0.26726124, 0.5345225, 0.8017837}) {
+		t.Fatalf("Normalize wrong result, got: %v", lhs)
+	}
+}
+
 func TestVec3SubScalar(t *testing.T) {
 	testVec3Sub(t, vec3SubScalar)
 }
