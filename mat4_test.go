@@ -15,7 +15,9 @@ func TestMat4MulSIMD(t *testing.T) {
 }
 
 func TestMat4Mul(t *testing.T) {
-	testMat4Mul(t, (*Mat4).Mul)
+	testMat4Mul(t, func(lhs, rhs *Mat4) {
+		lhs.Mul(rhs)
+	})
 }
 
 func testMat4Mul(t *testing.T, mul func(lhs, rhs *Mat4)) {
@@ -77,5 +79,41 @@ func BenchmarkMat4Perspective(b *testing.B) {
 
 	for n := 0; n < b.N; n++ {
 		m.Perspective(math32.Pi/4, 1920.0/1080, .1, 100)
+	}
+}
+
+func TestMat4Translate(t *testing.T) {
+	lhs := &Mat4{
+		1, 0, 0, 0,
+		0, 1, 0, 0,
+		0, 0, 1, 0,
+		1, 2, 3, 1,
+	}
+	lhs.Translate(&Vec3{4, 5, 6})
+
+	expectation := &Mat4{
+		1, 0, 0, 0,
+		0, 1, 0, 0,
+		0, 0, 1, 0,
+		5, 7, 9, 1,
+	}
+	if !reflect.DeepEqual(lhs, expectation) {
+		t.Fatalf("Translate wrong result, got: %v", lhs)
+	}
+}
+
+func TestMat4LookAt(t *testing.T) {
+	eye, center, up := Vec3{3, 3, 3}, Vec3{0, 0, 0}, Vec3{0, 1, 0}
+	m := &Mat4{}
+	m.LookAt(&eye, center, up)
+
+	expectation := &Mat4{
+		0.70710677, -0.4082483, 0.5773503, 0,
+		0, 0.8164966, 0.5773503, 0,
+		-0.70710677, -0.4082483, 0.5773503, 0,
+		0, 0, -5.1961527, 1,
+	}
+	if !reflect.DeepEqual(m, expectation) {
+		t.Fatalf("Translate wrong result, got: %v", m)
 	}
 }

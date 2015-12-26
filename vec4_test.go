@@ -14,7 +14,9 @@ func TestVec4AddSIMD(t *testing.T) {
 }
 
 func TestVec4Add(t *testing.T) {
-	testVec4Add(t, (*Vec4).Add)
+	testVec4Add(t, func(lhs, rhs *Vec4) {
+		lhs.Add(rhs)
+	})
 }
 
 func testVec4Add(t *testing.T, add func(lhs, rhs *Vec4)) {
@@ -62,7 +64,9 @@ func TestVec4MulSIMD(t *testing.T) {
 }
 
 func TestVec4(t *testing.T) {
-	testVec4Mul(t, (*Vec4).Mul)
+	testVec4Mul(t, func(lhs *Vec4, rhs float32) {
+		lhs.Mul(rhs)
+	})
 }
 
 func testVec4Mul(t *testing.T, mul func(lhs *Vec4, rhs float32)) {

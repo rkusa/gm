@@ -42,7 +42,9 @@ func TestVec3SubSIMD(t *testing.T) {
 }
 
 func TestVec3Sub(t *testing.T) {
-	testVec3Sub(t, (*Vec3).Sub)
+	testVec3Sub(t, func(lhs, rhs *Vec3) {
+		lhs.Sub(rhs)
+	})
 }
 
 func testVec3Sub(t *testing.T, sub func(lhs, rhs *Vec3)) {
