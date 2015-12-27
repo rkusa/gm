@@ -38,19 +38,20 @@ func testVec4Add(t *testing.T, add func(lhs, rhs *Vec4)) {
 }
 
 func BenchmarkVec4AddGo(b *testing.B) {
-	benchmarkVec4Add(b, lenVec4)
+	benchmarkVec4Add(b, addVec4)
 }
 
 func BenchmarkVec4AddSIMD(b *testing.B) {
-	benchmarkVec4Add(b, lenVec4SIMD)
+	benchmarkVec4Add(b, addVec4SIMD)
 }
 
-func benchmarkVec4Add(b *testing.B, len func(lhs *Vec4) float32) {
+func benchmarkVec4Add(b *testing.B, add func(lhs, rhs *Vec4)) {
 	lhs := &Vec4{1, 2, 3, 4}
+	rhs := &Vec4{5, 6, 7, 8}
 	b.ResetTimer()
 
 	for n := 0; n < b.N; n++ {
-		len(lhs)
+		add(lhs, rhs)
 	}
 }
 
@@ -76,20 +77,19 @@ func testVec4Len(t *testing.T, len func(lhs *Vec4) float32) {
 }
 
 func BenchmarkVec4LenGo(b *testing.B) {
-	benchmarkVec4Len(b, addVec4)
+	benchmarkVec4Len(b, lenVec4)
 }
 
 func BenchmarkVec4LenSIMD(b *testing.B) {
-	benchmarkVec4Len(b, addVec4SIMD)
+	benchmarkVec4Len(b, lenVec4SIMD)
 }
 
-func benchmarkVec4Len(b *testing.B, add func(lhs, rhs *Vec4)) {
+func benchmarkVec4Len(b *testing.B, len func(lhs *Vec4) float32) {
 	lhs := &Vec4{1, 2, 3, 4}
-	rhs := &Vec4{5, 6, 7, 8}
 	b.ResetTimer()
 
 	for n := 0; n < b.N; n++ {
-		add(lhs, rhs)
+		len(lhs)
 	}
 }
 
