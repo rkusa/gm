@@ -102,6 +102,38 @@ func BenchmarkMat4Perspective(b *testing.B) {
 	}
 }
 
+func TestMat4Rotate(t *testing.T) {
+	lhs := &Mat4{
+		1, 0, 0, 0,
+		0, 1, 0, 0,
+		0, 0, 1, 0,
+		1, 2, 3, 1,
+	}
+	rad := math32.Pi / 2
+	lhs.Rotate(rad, &Vec3{1, 0, 0})
+
+	expectation := &Mat4{
+		0.99999994, 0, 0, 0,
+		0, math32.Cos(rad), math32.Sin(rad), 0,
+		0, -math32.Sin(rad), math32.Cos(rad), 0,
+		1, 2, 3, 1,
+	}
+	if !reflect.DeepEqual(lhs, expectation) {
+		t.Fatalf("Rotate wrong result, got: %v %v", lhs, expectation)
+	}
+}
+
+func BenchmarkMat4Rotate(b *testing.B) {
+	m := Mat4Identity()
+	rad := math32.Pi / 2
+	axis := &Vec3{1, 0, 0}
+	b.ResetTimer()
+
+	for n := 0; n < b.N; n++ {
+		m.Rotate(rad, axis)
+	}
+}
+
 func TestMat4Translate(t *testing.T) {
 	lhs := &Mat4{
 		1, 0, 0, 0,

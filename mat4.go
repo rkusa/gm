@@ -98,6 +98,20 @@ func (lhs *Mat4) Perspective(fovy, aspect, near, far float32) *Mat4 {
 	return lhs
 }
 
+// Rotate rotates the matrix by the given angle around the given axis. Returns
+// itself for function chaining.
+func (lhs *Mat4) Rotate(rad float32, axis *Vec3) *Mat4 {
+	x, y, z := axis[0], axis[1], axis[2]
+	s, c := math32.Sin(rad), math32.Cos(rad)
+	t := 1 - c
+
+	lhs[0], lhs[1], lhs[2] = x*x*t+c, x*y*t+z*s, x*z*t-y*s
+	lhs[4], lhs[5], lhs[6] = x*y*t-z*s, y*y*t+c, y*z*t+x*s
+	lhs[8], lhs[9], lhs[10] = x*z*t+y*s, y*z*t-x*s, z*z*t+c
+
+	return lhs
+}
+
 // Translate the matrix by the given vector. Returns itself for function
 // chaining.
 func (lhs *Mat4) Translate(v *Vec3) *Mat4 {
