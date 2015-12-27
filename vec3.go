@@ -34,10 +34,7 @@ func (lhs *Vec3) Len() float32 {
 
 // Norrmalize the vector. Returns itself for function chaining.
 func (lhs *Vec3) Normalize() *Vec3 {
-	l := lhs.Len()
-	lhs[0] /= l
-	lhs[1] /= l
-	lhs[2] /= l
+	lhs.Div(lhs.Len())
 	return lhs
 }
 
@@ -53,5 +50,18 @@ func subVec3(lhs, rhs *Vec3) {
 // saved into the calling vector. Returns itself for function chaining.
 func (lhs *Vec3) Sub(rhs *Vec3) *Vec3 {
 	subVec3SIMD(lhs, rhs)
+	return lhs
+}
+
+func divVec3SIMD(lhs *Vec3, rhs float32)
+
+func divVec3(lhs *Vec3, rhs float32) {
+	lhs[0] /= rhs
+	lhs[1] /= rhs
+	lhs[2] /= rhs
+}
+
+func (lhs *Vec3) Div(rhs float32) *Vec3 {
+	divVec3(lhs, rhs)
 	return lhs
 }

@@ -4,21 +4,26 @@ Benchmarks are done on a MacBook Pro (Early 2015, 2.9GHz Intel Core i5)
 
 ### Vec3
 
-function | scalar         | SIMD
+function | Go             | SIMD
 -------- | -------------- | --------------
+Div      | 5.24 ns/op     | 5.30 ns/op
 Len      | **4.91 ns/op** | 6.18 ns/op
 Sub      | 3.76 ns/op     | **2.77 ns/op**
 
+function  | result
+--------- | ----------
+Normalize | 20.5 ns/op
+
 ### Vec4
 
-function | scalar         | SIMD
+function | Go             | SIMD
 -------- | -------------- | --------------
 Add      | 4.26 ns/op     | **2.78 ns/op**
 Mul      | 2.76 ns/op     | 2.77 ns/op
 
 ### Mat4
 
-function | scalar         | SIMD
+function | Go             | SIMD
 -------- | -------------- | --------------
 Mul      | 29.3 ns/op     | **9.34 ns/op**
 

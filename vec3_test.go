@@ -62,6 +62,15 @@ func TestVec3Normalize(t *testing.T) {
 	}
 }
 
+func BenchmarkVec3Normalize(b *testing.B) {
+	lhs := &Vec3{1, 2, 3}
+	b.ResetTimer()
+
+	for n := 0; n < b.N; n++ {
+		lhs.Normalize()
+	}
+}
+
 func TestVec3SubGo(t *testing.T) {
 	testVec3Sub(t, subVec3)
 }
@@ -109,5 +118,47 @@ func benchmarkVec3Sub(b *testing.B, sub func(lhs, rhs *Vec3)) {
 
 	for n := 0; n < b.N; n++ {
 		sub(lhs, rhs)
+	}
+}
+
+func TestVec3DivGo(t *testing.T) {
+	testVec3Div(t, divVec3)
+}
+
+func TestVec3DivSIMD(t *testing.T) {
+	testVec3Div(t, divVec3SIMD)
+}
+
+func TestVec3Div(t *testing.T) {
+	testVec3Div(t, func(lhs *Vec3, rhs float32) {
+		lhs.Div(rhs)
+	})
+}
+
+func testVec3Div(t *testing.T, div func(lhs *Vec3, rhs float32)) {
+	lhs := &Vec3{1, 2, 3}
+	var rhs float32 = 2
+
+	div(lhs, rhs)
+	if !reflect.DeepEqual(lhs, &Vec3{.5, 1, 1.5}) {
+		t.Fatalf("Div wrong result, got: %v", lhs)
+	}
+}
+
+func BenchmarkVec3DivGo(b *testing.B) {
+	benchmarkVec3Div(b, divVec3)
+}
+
+func BenchmarkVec3DivSIMD(b *testing.B) {
+	benchmarkVec3Div(b, divVec3SIMD)
+}
+
+func benchmarkVec3Div(b *testing.B, div func(lhs *Vec3, rhs float32)) {
+	lhs := &Vec3{1, 1, 1}
+	var rhs float32 = 1
+	b.ResetTimer()
+
+	for n := 0; n < b.N; n++ {
+		div(lhs, rhs)
 	}
 }
