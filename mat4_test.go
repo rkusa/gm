@@ -6,6 +6,26 @@ import (
 	"testing"
 )
 
+func TestMat4Identity(t *testing.T) {
+	ident := &Mat4{
+		1, 0, 0, 0,
+		0, 1, 0, 0,
+		0, 0, 1, 0,
+		0, 0, 0, 1,
+	}
+
+	m := Mat4Identity()
+	if !reflect.DeepEqual(m, ident) {
+		t.Fatalf("Mat4Identity wrong result, got: %v", m)
+	}
+
+	m = &Mat4{}
+	m.Identity()
+	if !reflect.DeepEqual(m, ident) {
+		t.Fatalf("Identity wrong result, got: %v", m)
+	}
+}
+
 func TestMat4MulGo(t *testing.T) {
 	testMat4Mul(t, mulMat4)
 }

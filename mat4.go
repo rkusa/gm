@@ -4,6 +4,15 @@ import "github.com/rkusa/ml/math32"
 
 type Mat4 [16]float32
 
+func Mat4Identity() *Mat4 {
+	return &Mat4{
+		1, 0, 0, 0,
+		0, 1, 0, 0,
+		0, 0, 1, 0,
+		0, 0, 0, 1,
+	}
+}
+
 func mulMat4SIMD(lhs, rhs *Mat4)
 
 func mulMat4(out, rhs *Mat4) {
@@ -60,6 +69,16 @@ func (lhs *Mat4) LookAt(eye *Vec3, center, up Vec3) *Mat4 {
 
 	lhs.Translate(&Vec3{-eye[0], -eye[1], -eye[2]})
 
+	return lhs
+}
+
+// Identity resets itself to the identity matrix. Returns itself for
+// function chaining.
+func (lhs *Mat4) Identity() *Mat4 {
+	lhs[0], lhs[1], lhs[2], lhs[3] = 1, 0, 0, 0
+	lhs[4], lhs[5], lhs[6], lhs[7] = 0, 1, 0, 0
+	lhs[8], lhs[9], lhs[10], lhs[11] = 0, 0, 1, 0
+	lhs[12], lhs[13], lhs[14], lhs[15] = 0, 0, 0, 1
 	return lhs
 }
 
