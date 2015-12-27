@@ -1,5 +1,7 @@
 package ml
 
+import "github.com/rkusa/ml/math32"
+
 type Vec4 [4]float32
 
 func addVec4SIMD(lhs, rhs *Vec4)
@@ -15,6 +17,19 @@ func addVec4(lhs, rhs *Vec4) {
 func (lhs *Vec4) Add(rhs *Vec4) *Vec4 {
 	addVec4SIMD(lhs, rhs)
 	return lhs
+}
+
+func lenVec4SIMD(lhs *Vec4) float32
+
+func lenVec4(lhs *Vec4) float32 {
+	return math32.Sqrt(
+		lhs[0]*lhs[0] + lhs[1]*lhs[1] + lhs[2]*lhs[2] + lhs[3]*lhs[3],
+	)
+}
+
+// Len returns the vector length.
+func (lhs *Vec4) Len() float32 {
+	return lenVec4SIMD(lhs)
 }
 
 func mulVec4SIMD(lhs *Vec4, rhs float32)

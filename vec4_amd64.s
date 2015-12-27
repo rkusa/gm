@@ -17,6 +17,35 @@ TEXT ·addVec4SIMD(SB),NOSPLIT,$0
   MOVUPS X0, (R8)
   RET
 
+// func lenVec4SIMD(lhs *Vec4) float32
+TEXT ·lenVec4SIMD(SB),NOSPLIT,$0
+  // load pointer into register
+  MOVQ lhs+0(FP), R8
+
+  // move vector into SEE register
+  MOVUPS (R8), X0
+
+  // multipliy with itself
+  MULPS X0, X0
+
+  // copy two high values to low values
+  MOVHLPS X0, X1
+
+  // add two low values
+  ADDPS X1, X0
+
+  // copy low values reverse
+  MOVUPS X0, X1
+  SHUFPS $0x01, X1, X1
+  ADDSS X1, X0
+
+  // sqrt resulting sum
+  SQRTSS X0, X0
+
+  // return result
+  MOVSS X0, ret+8(FP)
+  RET
+
 // func mulVec4SIMD(lhs *Vec4, rhs float32)
 TEXT ·mulVec4SIMD(SB),NOSPLIT,$0
   // load vector

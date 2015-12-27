@@ -38,14 +38,52 @@ func testVec4Add(t *testing.T, add func(lhs, rhs *Vec4)) {
 }
 
 func BenchmarkVec4AddGo(b *testing.B) {
-	benchmarkVec4Add(b, addVec4)
+	benchmarkVec4Add(b, lenVec4)
 }
 
 func BenchmarkVec4AddSIMD(b *testing.B) {
-	benchmarkVec4Add(b, addVec4SIMD)
+	benchmarkVec4Add(b, lenVec4SIMD)
 }
 
-func benchmarkVec4Add(b *testing.B, add func(lhs, rhs *Vec4)) {
+func benchmarkVec4Add(b *testing.B, len func(lhs *Vec4) float32) {
+	lhs := &Vec4{1, 2, 3, 4}
+	b.ResetTimer()
+
+	for n := 0; n < b.N; n++ {
+		len(lhs)
+	}
+}
+
+func TestVec4LenGo(t *testing.T) {
+	testVec4Len(t, lenVec4)
+}
+
+func TestVec4LenSIMD(t *testing.T) {
+	testVec4Len(t, lenVec4SIMD)
+}
+
+func TestVec4Len(t *testing.T) {
+	testVec4Len(t, (*Vec4).Len)
+}
+
+func testVec4Len(t *testing.T, len func(lhs *Vec4) float32) {
+	lhs := &Vec4{1, 2, 3, 4}
+
+	l := len(lhs)
+	if l != 5.477226 {
+		t.Fatalf("Len wrong result, got: %v, %v", l, lhs)
+	}
+}
+
+func BenchmarkVec4LenGo(b *testing.B) {
+	benchmarkVec4Len(b, addVec4)
+}
+
+func BenchmarkVec4LenSIMD(b *testing.B) {
+	benchmarkVec4Len(b, addVec4SIMD)
+}
+
+func benchmarkVec4Len(b *testing.B, add func(lhs, rhs *Vec4)) {
 	lhs := &Vec4{1, 2, 3, 4}
 	rhs := &Vec4{5, 6, 7, 8}
 	b.ResetTimer()
