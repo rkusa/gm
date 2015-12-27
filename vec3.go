@@ -21,15 +21,9 @@ func (lhs *Vec3) Cross(rhs *Vec3) *Vec3 {
 	return lhs
 }
 
-func lenVec3SIMD(lhs *Vec3) float32
-
-func lenVec3(lhs *Vec3) float32 {
-	return math32.Sqrt(lhs[0]*lhs[0] + lhs[1]*lhs[1] + lhs[2]*lhs[2])
-}
-
 // Len returns the vector length.
 func (lhs *Vec3) Len() float32 {
-	return lenVec3(lhs)
+	return math32.Sqrt(lhs[0]*lhs[0] + lhs[1]*lhs[1] + lhs[2]*lhs[2])
 }
 
 // Norrmalize the vector. Returns itself for function chaining.
@@ -38,30 +32,20 @@ func (lhs *Vec3) Normalize() *Vec3 {
 	return lhs
 }
 
-func subVec3SIMD(lhs, rhs *Vec3)
-
-func subVec3(lhs, rhs *Vec3) {
+// Sub subtracts the provided vector from the calling one. The result is
+// saved into the calling vector. Returns itself for function chaining.
+func (lhs *Vec3) Sub(rhs *Vec3) *Vec3 {
 	lhs[0] -= rhs[0]
 	lhs[1] -= rhs[1]
 	lhs[2] -= rhs[2]
-}
-
-// Sub subtracts a the provided vector from the calling one. The result is
-// saved into the calling vector. Returns itself for function chaining.
-func (lhs *Vec3) Sub(rhs *Vec3) *Vec3 {
-	subVec3SIMD(lhs, rhs)
 	return lhs
 }
 
-func divVec3SIMD(lhs *Vec3, rhs float32)
-
-func divVec3(lhs *Vec3, rhs float32) {
+// Div divides the the calling vector by the provided one. The result is
+// saved back into the calling vector. Returns itself for function chaining.
+func (lhs *Vec3) Div(rhs float32) *Vec3 {
 	lhs[0] /= rhs
 	lhs[1] /= rhs
 	lhs[2] /= rhs
-}
-
-func (lhs *Vec3) Div(rhs float32) *Vec3 {
-	divVec3(lhs, rhs)
 	return lhs
 }

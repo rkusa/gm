@@ -15,41 +15,51 @@ func TestVec3Cross(t *testing.T) {
 	}
 }
 
-func TestVec3LenGo(t *testing.T) {
-	testVec3Len(t, lenVec3)
+func BenchmarkVec3Cross(b *testing.B) {
+	lhs := &Vec3{1, 1, 1}
+	rhs := &Vec3{1, 1, 1}
+	b.ResetTimer()
+
+	for n := 0; n < b.N; n++ {
+		lhs.Cross(rhs)
+	}
 }
 
-func TestVec3LenSIMD(t *testing.T) {
-	testVec3Len(t, lenVec3SIMD)
+func TestVec3Div(t *testing.T) {
+	lhs := &Vec3{1, 2, 3}
+	var rhs float32 = 2
+
+	lhs.Div(rhs)
+	if !reflect.DeepEqual(lhs, &Vec3{.5, 1, 1.5}) {
+		t.Fatalf("Div wrong result, got: %v", lhs)
+	}
+}
+
+func BenchmarkVec3Div(b *testing.B) {
+	lhs := &Vec3{1, 1, 1}
+	var rhs float32 = 1
+	b.ResetTimer()
+
+	for n := 0; n < b.N; n++ {
+		lhs.Div(rhs)
+	}
 }
 
 func TestVec3Len(t *testing.T) {
-	testVec3Len(t, (*Vec3).Len)
-}
-
-func testVec3Len(t *testing.T, len func(lhs *Vec3) float32) {
 	lhs := &Vec3{1, 2, 3}
-	length := len(lhs)
+	length := lhs.Len()
 
 	if length != 3.7416575 {
 		t.Fatalf("Len wrong result, got: %v", length)
 	}
 }
 
-func BenchmarkVec3LenGo(b *testing.B) {
-	benchmarkVec3Len(b, lenVec3)
-}
-
-func BenchmarkVec3LenSIMD(b *testing.B) {
-	benchmarkVec3Len(b, lenVec3SIMD)
-}
-
-func benchmarkVec3Len(b *testing.B, len func(lhs *Vec3) float32) {
+func BenchmarkVec3Len(b *testing.B) {
 	lhs := &Vec3{1, 2, 3}
 	b.ResetTimer()
 
 	for n := 0; n < b.N; n++ {
-		len(lhs)
+		lhs.Len()
 	}
 }
 
@@ -71,25 +81,11 @@ func BenchmarkVec3Normalize(b *testing.B) {
 	}
 }
 
-func TestVec3SubGo(t *testing.T) {
-	testVec3Sub(t, subVec3)
-}
-
-func TestVec3SubSIMD(t *testing.T) {
-	testVec3Sub(t, subVec3SIMD)
-}
-
 func TestVec3Sub(t *testing.T) {
-	testVec3Sub(t, func(lhs, rhs *Vec3) {
-		lhs.Sub(rhs)
-	})
-}
-
-func testVec3Sub(t *testing.T, sub func(lhs, rhs *Vec3)) {
 	lhs := &Vec3{1, 2, 3}
 	rhs := &Vec3{6, 5, 4}
 
-	sub(lhs, rhs)
+	lhs.Sub(rhs)
 	if !reflect.DeepEqual(lhs, &Vec3{-5, -3, -1}) {
 		t.Fatalf("Sub wrong result, got: %v", lhs)
 	}
@@ -97,68 +93,18 @@ func testVec3Sub(t *testing.T, sub func(lhs, rhs *Vec3)) {
 	// test sub itself
 	lhs = &Vec3{1, 2, 3}
 
-	sub(lhs, lhs)
+	lhs.Sub(lhs)
 	if !reflect.DeepEqual(lhs, &Vec3{0, 0, 0}) {
 		t.Fatalf("Sub itself wrong result, got: %v", lhs)
 	}
 }
 
-func BenchmarkVec3SubGo(b *testing.B) {
-	benchmarkVec3Sub(b, subVec3)
-}
-
-func BenchmarkVec3SubSIMD(b *testing.B) {
-	benchmarkVec3Sub(b, subVec3SIMD)
-}
-
-func benchmarkVec3Sub(b *testing.B, sub func(lhs, rhs *Vec3)) {
+func BenchmarkVec3Sub(b *testing.B) {
 	lhs := &Vec3{1, 2, 3}
 	rhs := &Vec3{4, 5, 6}
 	b.ResetTimer()
 
 	for n := 0; n < b.N; n++ {
-		sub(lhs, rhs)
-	}
-}
-
-func TestVec3DivGo(t *testing.T) {
-	testVec3Div(t, divVec3)
-}
-
-func TestVec3DivSIMD(t *testing.T) {
-	testVec3Div(t, divVec3SIMD)
-}
-
-func TestVec3Div(t *testing.T) {
-	testVec3Div(t, func(lhs *Vec3, rhs float32) {
-		lhs.Div(rhs)
-	})
-}
-
-func testVec3Div(t *testing.T, div func(lhs *Vec3, rhs float32)) {
-	lhs := &Vec3{1, 2, 3}
-	var rhs float32 = 2
-
-	div(lhs, rhs)
-	if !reflect.DeepEqual(lhs, &Vec3{.5, 1, 1.5}) {
-		t.Fatalf("Div wrong result, got: %v", lhs)
-	}
-}
-
-func BenchmarkVec3DivGo(b *testing.B) {
-	benchmarkVec3Div(b, divVec3)
-}
-
-func BenchmarkVec3DivSIMD(b *testing.B) {
-	benchmarkVec3Div(b, divVec3SIMD)
-}
-
-func benchmarkVec3Div(b *testing.B, div func(lhs *Vec3, rhs float32)) {
-	lhs := &Vec3{1, 1, 1}
-	var rhs float32 = 1
-	b.ResetTimer()
-
-	for n := 0; n < b.N; n++ {
-		div(lhs, rhs)
+		lhs.Sub(rhs)
 	}
 }

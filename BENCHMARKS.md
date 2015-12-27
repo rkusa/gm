@@ -4,15 +4,16 @@ Benchmarks are done on a MacBook Pro (Early 2015, 2.9GHz Intel Core i5)
 
 ### Vec3
 
-function | Go             | SIMD
--------- | -------------- | --------------
-Div      | 5.24 ns/op     | 5.30 ns/op
-Len      | **4.91 ns/op** | 6.18 ns/op
-Sub      | 3.76 ns/op     | **2.77 ns/op**
+Initial tests showed that using SIMD for Vec3 is not faster. That is, Vec3
+implementations are pure Go only.
 
 function  | result
 --------- | ----------
-Normalize | 20.5 ns/op
+Cross     | 4.34 ns/op
+Div       | 5.42 ns/op
+Len       | 4.50 ns/op
+Normalize | 18.6 ns/op
+Sub       | 2.83 ns/op
 
 ### Vec4
 
