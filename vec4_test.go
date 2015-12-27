@@ -5,12 +5,12 @@ import (
 	"testing"
 )
 
-func TestVec4AddScalar(t *testing.T) {
-	testVec4Add(t, vec4AddScalar)
+func TestVec4AddGo(t *testing.T) {
+	testVec4Add(t, addVec4)
 }
 
 func TestVec4AddSIMD(t *testing.T) {
-	testVec4Add(t, vec4AddSIMD)
+	testVec4Add(t, addVec4SIMD)
 }
 
 func TestVec4Add(t *testing.T) {
@@ -37,12 +37,12 @@ func testVec4Add(t *testing.T, add func(lhs, rhs *Vec4)) {
 	}
 }
 
-func BenchmarkVec4AddScalar(b *testing.B) {
-	benchmarkVec4Add(b, vec4AddScalar)
+func BenchmarkVec4AddGo(b *testing.B) {
+	benchmarkVec4Add(b, addVec4)
 }
 
 func BenchmarkVec4AddSIMD(b *testing.B) {
-	benchmarkVec4Add(b, vec4AddSIMD)
+	benchmarkVec4Add(b, addVec4SIMD)
 }
 
 func benchmarkVec4Add(b *testing.B, add func(lhs, rhs *Vec4)) {
@@ -55,12 +55,12 @@ func benchmarkVec4Add(b *testing.B, add func(lhs, rhs *Vec4)) {
 	}
 }
 
-func TestVec4MulScalar(t *testing.T) {
-	testVec4Mul(t, vec4MulScalar)
+func TestVec4MulGo(t *testing.T) {
+	testVec4Mul(t, mulVec4)
 }
 
 func TestVec4MulSIMD(t *testing.T) {
-	testVec4Mul(t, vec4MulSIMD)
+	testVec4Mul(t, mulVec4SIMD)
 }
 
 func TestVec4(t *testing.T) {
@@ -78,12 +78,12 @@ func testVec4Mul(t *testing.T, mul func(lhs *Vec4, rhs float32)) {
 	}
 }
 
-func BenchmarkVec4MulScalar(b *testing.B) {
-	benchmarkVec4Mul(b, vec4MulScalar)
+func BenchmarkVec4MulGo(b *testing.B) {
+	benchmarkVec4Mul(b, mulVec4)
 }
 
 func BenchmarkVec4MulSIMD(b *testing.B) {
-	benchmarkVec4Mul(b, vec4MulSIMD)
+	benchmarkVec4Mul(b, mulVec4SIMD)
 }
 
 func benchmarkVec4Mul(b *testing.B, mul func(lhs *Vec4, rhs float32)) {

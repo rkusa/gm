@@ -33,12 +33,12 @@ func TestVec3Normalize(t *testing.T) {
 	}
 }
 
-func TestVec3SubScalar(t *testing.T) {
-	testVec3Sub(t, vec3SubScalar)
+func TestVec3SubGo(t *testing.T) {
+	testVec3Sub(t, subVec3)
 }
 
 func TestVec3SubSIMD(t *testing.T) {
-	testVec3Sub(t, vec3SubSIMD)
+	testVec3Sub(t, subVec3SIMD)
 }
 
 func TestVec3Sub(t *testing.T) {
@@ -65,12 +65,12 @@ func testVec3Sub(t *testing.T, sub func(lhs, rhs *Vec3)) {
 	}
 }
 
-func BenchmarkVec3SubScalar(b *testing.B) {
-	benchmarkVec3Sub(b, vec3SubScalar)
+func BenchmarkVec3SubGo(b *testing.B) {
+	benchmarkVec3Sub(b, subVec3)
 }
 
 func BenchmarkVec3SubSIMD(b *testing.B) {
-	benchmarkVec3Sub(b, vec3SubSIMD)
+	benchmarkVec3Sub(b, subVec3SIMD)
 }
 
 func benchmarkVec3Sub(b *testing.B, sub func(lhs, rhs *Vec3)) {

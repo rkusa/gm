@@ -1,7 +1,7 @@
 #include "textflag.h"
 
-// func vec4AddSIMD(lhs, rhs *Vec4)
-TEXT ·vec4AddSIMD(SB),NOSPLIT,$0
+// func addVec4SIMD(lhs, rhs *Vec4)
+TEXT ·addVec4SIMD(SB),NOSPLIT,$0
   // load pointers into registers
   MOVQ lhs+0(FP), R8
   MOVQ rhs+8(FP), R9
@@ -17,8 +17,8 @@ TEXT ·vec4AddSIMD(SB),NOSPLIT,$0
   MOVUPS X0, (R8)
   RET
 
-// func vec4MulSIMD(lhs *Vec4, rhs float32)
-TEXT ·vec4MulSIMD(SB),NOSPLIT,$0
+// func mulVec4SIMD(lhs *Vec4, rhs float32)
+TEXT ·mulVec4SIMD(SB),NOSPLIT,$0
   // load vector
   MOVQ lhs+0(FP), R8
   MOVUPS (R8), X0

@@ -35,9 +35,17 @@ func (lhs *Vec3) Normalize() *Vec3 {
 	return lhs
 }
 
+func subVec3SIMD(lhs, rhs *Vec3)
+
+func subVec3(lhs, rhs *Vec3) {
+	lhs[0] -= rhs[0]
+	lhs[1] -= rhs[1]
+	lhs[2] -= rhs[2]
+}
+
 // Sub subtracts a the provided vector from the calling one. The result is
 // saved into the calling vector. Returns itself for function chaining.
 func (lhs *Vec3) Sub(rhs *Vec3) *Vec3 {
-	vec3SubSIMD(lhs, rhs)
+	subVec3SIMD(lhs, rhs)
 	return lhs
 }

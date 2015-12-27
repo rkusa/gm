@@ -6,12 +6,12 @@ import (
 	"testing"
 )
 
-func TestMat4MulScalar(t *testing.T) {
-	testMat4Mul(t, mat4MulScalar)
+func TestMat4MulGo(t *testing.T) {
+	testMat4Mul(t, mulMat4)
 }
 
 func TestMat4MulSIMD(t *testing.T) {
-	testMat4Mul(t, mat4MulSIMD)
+	testMat4Mul(t, mulMat4SIMD)
 }
 
 func TestMat4Mul(t *testing.T) {
@@ -40,12 +40,12 @@ func testMat4Mul(t *testing.T, mul func(lhs, rhs *Mat4)) {
 	}
 }
 
-func BenchmarkMat4MulScalar(b *testing.B) {
-	benchmarkMat4Mul(b, mat4MulScalar)
+func BenchmarkMat4MulGo(b *testing.B) {
+	benchmarkMat4Mul(b, mulMat4)
 }
 
 func BenchmarkMat4MulSIMD(b *testing.B) {
-	benchmarkMat4Mul(b, mat4MulSIMD)
+	benchmarkMat4Mul(b, mulMat4SIMD)
 }
 
 func benchmarkMat4Mul(b *testing.B, mul func(lhs, rhs *Mat4)) {
@@ -102,6 +102,16 @@ func TestMat4Translate(t *testing.T) {
 	}
 }
 
+func BenchmarkMat4Translate(b *testing.B) {
+	m := &Mat4{}
+	v := &Vec3{}
+	b.ResetTimer()
+
+	for n := 0; n < b.N; n++ {
+		m.Translate(v)
+	}
+}
+
 func TestMat4LookAt(t *testing.T) {
 	eye, center, up := Vec3{3, 3, 3}, Vec3{0, 0, 0}, Vec3{0, 1, 0}
 	m := &Mat4{}
@@ -115,5 +125,15 @@ func TestMat4LookAt(t *testing.T) {
 	}
 	if !reflect.DeepEqual(m, expectation) {
 		t.Fatalf("Translate wrong result, got: %v", m)
+	}
+}
+
+func BenchmarkMat4LookAt(b *testing.B) {
+	eye, center, up := Vec3{3, 3, 3}, Vec3{0, 0, 0}, Vec3{0, 1, 0}
+	m := &Mat4{}
+	b.ResetTimer()
+
+	for n := 0; n < b.N; n++ {
+		m.LookAt(&eye, center, up)
 	}
 }

@@ -1,7 +1,7 @@
 #include "textflag.h"
 
-// func mat4MulSIMD(lhs, rhs *Vec4)
-TEXT ·mat4MulSIMD(SB),NOSPLIT,$0
+// func mulMat4SIMD(lhs, rhs *Vec4)
+TEXT ·mulMat4SIMD(SB),NOSPLIT,$0
   // load pointers into registers
   MOVQ lhs+0(FP), R8
   MOVQ rhs+8(FP), R9

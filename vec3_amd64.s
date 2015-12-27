@@ -1,7 +1,7 @@
 #include "textflag.h"
 
-// func vec3SubSIMD(lhs, rhs *Vec4)
-TEXT ·vec3SubSIMD(SB),NOSPLIT,$0
+// func subVec3SIMD(lhs, rhs *Vec4)
+TEXT ·subVec3SIMD(SB),NOSPLIT,$0
   // load pointers into registers
   MOVQ lhs+0(FP), R8
   MOVQ rhs+8(FP), R9

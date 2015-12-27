@@ -13,7 +13,7 @@ Sub      | 3.76 ns/op     | **2.77 ns/op**
 function | scalar         | SIMD
 -------- | -------------- | --------------
 Add      | 4.26 ns/op     | **2.78 ns/op**
-Mul      | **2.76 ns/op** | 2.77 ns/op
+Mul      | 2.76 ns/op     | 2.77 ns/op
 
 ### Mat4
 
@@ -23,7 +23,9 @@ Mul      | 29.3 ns/op     | **9.34 ns/op**
 
 function    | result
 ----------- | ----------
+LookAt      | 94.4 ns/op
 Perspective | 23.3 ns/op
+Translate   | 9.46 ns/op
 
 ### Math32 (float32 math)
 
