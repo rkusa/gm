@@ -47,3 +47,18 @@ func (lhs *Vec4) Mul(rhs float32) *Vec4 {
 	mulVec4(lhs, rhs)
 	return lhs
 }
+
+func subVec4SIMD(lhs, rhs *Vec4)
+
+func subVec4(lhs, rhs *Vec4) {
+	lhs[0] -= rhs[0]
+	lhs[1] -= rhs[1]
+	lhs[2] -= rhs[2]
+	lhs[3] -= rhs[3]
+}
+
+// Sub substracts two vectors. Returns itself for function chaining.
+func (lhs *Vec4) Sub(rhs *Vec4) *Vec4 {
+	subVec4(lhs, rhs)
+	return lhs
+}

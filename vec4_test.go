@@ -133,3 +133,53 @@ func benchmarkVec4Mul(b *testing.B, mul func(lhs *Vec4, rhs float32)) {
 		lhs.Mul(rhs)
 	}
 }
+
+func TestVec4SubGo(t *testing.T) {
+	testVec4Sub(t, subVec4)
+}
+
+func TestVec4SubSIMD(t *testing.T) {
+	testVec4Sub(t, subVec4SIMD)
+}
+
+func TestVec4Sub(t *testing.T) {
+	testVec4Sub(t, func(lhs, rhs *Vec4) {
+		lhs.Sub(rhs)
+	})
+}
+
+func testVec4Sub(t *testing.T, sub func(lhs, rhs *Vec4)) {
+	lhs := &Vec4{1, 2, 3, 4}
+	rhs := &Vec4{8, 7, 6, 5}
+
+	sub(lhs, rhs)
+	if !reflect.DeepEqual(lhs, &Vec4{-7, -5, -3, -1}) {
+		t.Fatalf("Sub wrong result, got: %v", lhs)
+	}
+
+	// test sub itself
+	lhs = &Vec4{1, 2, 3, 4}
+
+	sub(lhs, lhs)
+	if !reflect.DeepEqual(lhs, &Vec4{0, 0, 0, 0}) {
+		t.Fatalf("Sub itself wrong result, got: %v", lhs)
+	}
+}
+
+func BenchmarkVec4SubGo(b *testing.B) {
+	benchmarkVec4Sub(b, subVec4)
+}
+
+func BenchmarkVec4SubSIMD(b *testing.B) {
+	benchmarkVec4Sub(b, subVec4SIMD)
+}
+
+func benchmarkVec4Sub(b *testing.B, sub func(lhs, rhs *Vec4)) {
+	lhs := &Vec4{1, 2, 3, 4}
+	rhs := &Vec4{5, 6, 7, 8}
+	b.ResetTimer()
+
+	for n := 0; n < b.N; n++ {
+		sub(lhs, rhs)
+	}
+}
