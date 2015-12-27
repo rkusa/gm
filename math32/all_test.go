@@ -38,6 +38,18 @@ var copysign = []float32{
 	-1.8253080916808550e+00,
 	-8.6859247685756013e+00,
 }
+var cos = []float32{
+	2.634752140995199110787593e-01,
+	1.148551260848219865642039e-01,
+	9.6191297325640768154550453e-01,
+	2.938141150061714816890637e-01,
+	-9.777138189897924126294461e-01,
+	-9.7693041344303219127199518e-01,
+	4.940088096948647263961162e-01,
+	-9.1565869021018925545016502e-01,
+	-2.517729313893103197176091e-01,
+	-7.39241351595676573201918e-01,
+}
 var fabs = []float32{
 	4.9790119248836735e+00,
 	7.7388724745781045e+00,
@@ -49,6 +61,30 @@ var fabs = []float32{
 	2.7279399104360102e+00,
 	1.8253080916808550e+00,
 	8.6859247685756013e+00,
+}
+var signbit = []bool{
+	false,
+	false,
+	true,
+	true,
+	false,
+	false,
+	false,
+	false,
+	false,
+	true,
+}
+var sin = []float32{
+	-9.6466616586009283766724726e-01,
+	9.9338225271646545763467022e-01,
+	-2.7335587039794393342449301e-01,
+	9.5586257685042792878173752e-01,
+	-2.099421066779969164496634e-01,
+	2.135578780799860532750616e-01,
+	-8.694568971167362743327708e-01,
+	4.019566681155577786649878e-01,
+	9.6778633541687993721617774e-01,
+	-6.734405869050344734943028e-01,
 }
 var sqrt = []float32{
 	2.2313699855653004178179799e+00,
@@ -75,6 +111,28 @@ var tan = []float32{
 	9.10988793377685105753416e-01,
 }
 
+var vfcopysignSC = []float32{
+	Inf(-1),
+	Inf(1),
+	NaN(),
+}
+var copysignSC = []float32{
+	Inf(-1),
+	Inf(-1),
+	NaN(),
+}
+
+var vfcosSC = []float32{
+	Inf(-1),
+	Inf(1),
+	NaN(),
+}
+var cosSC = []float32{
+	NaN(),
+	NaN(),
+	NaN(),
+}
+
 var vffabsSC = []float32{
 	Inf(-1),
 	Copysign(0, -1),
@@ -90,15 +148,19 @@ var fabsSC = []float32{
 	NaN(),
 }
 
-var vfcopysignSC = []float32{
+var vfsignbitSC = []float32{
 	Inf(-1),
+	Copysign(0, -1),
+	0,
 	Inf(1),
 	NaN(),
 }
-var copysignSC = []float32{
-	Inf(-1),
-	Inf(-1),
-	NaN(),
+var signbitSC = []bool{
+	true,
+	true,
+	false,
+	false,
+	false,
 }
 
 var vfsinSC = []float32{
@@ -187,6 +249,45 @@ func TestCopysign(t *testing.T) {
 	for i := 0; i < len(vfcopysignSC); i++ {
 		if f := Copysign(vfcopysignSC[i], -1); !alike(copysignSC[i], f) {
 			t.Errorf("Copysign(%g, -1) = %g, want %g", vfcopysignSC[i], f, copysignSC[i])
+		}
+	}
+}
+
+func TestCos(t *testing.T) {
+	for i := 0; i < len(vf); i++ {
+		if f := Cos(vf[i]); !veryclose(cos[i], f) {
+			t.Errorf("Cos(%g) = %g, want %g", vf[i], f, cos[i])
+		}
+	}
+	for i := 0; i < len(vfcosSC); i++ {
+		if f := Cos(vfcosSC[i]); !alike(cosSC[i], f) {
+			t.Errorf("Cos(%g) = %g, want %g", vfcosSC[i], f, cosSC[i])
+		}
+	}
+}
+
+func TestSignbit(t *testing.T) {
+	for i := 0; i < len(vf); i++ {
+		if f := Signbit(vf[i]); signbit[i] != f {
+			t.Errorf("Signbit(%g) = %t, want %t", vf[i], f, signbit[i])
+		}
+	}
+	for i := 0; i < len(vfsignbitSC); i++ {
+		if f := Signbit(vfsignbitSC[i]); signbitSC[i] != f {
+			t.Errorf("Signbit(%g) = %t, want %t", vfsignbitSC[i], f, signbitSC[i])
+		}
+	}
+}
+
+func TestSin(t *testing.T) {
+	for i := 0; i < len(vf); i++ {
+		if f := Sin(vf[i]); !veryclose(sin[i], f) {
+			t.Errorf("Sin(%g) = %g, want %g", vf[i], f, sin[i])
+		}
+	}
+	for i := 0; i < len(vfsinSC); i++ {
+		if f := Sin(vfsinSC[i]); !alike(sinSC[i], f) {
+			t.Errorf("Sin(%g) = %g, want %g", vfsinSC[i], f, sinSC[i])
 		}
 	}
 }

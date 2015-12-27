@@ -16,22 +16,8 @@ package math32
 // available from http://www.netlib.org/cephes/cmath.tgz.
 // The go code is a simplified version of the original C.
 //
-//      tan.c
-//
-//      Circular tangent
-//
-// SYNOPSIS:
-//
-// double x, y, tan();
-// y = tan( x );
-//
-// DESCRIPTION:
-//
-// Returns the circular tangent of the radian argument x.
-//
-// Range reduction is modulo pi/4.  A rational function
-//       x + x**3 P(x**2)/Q(x**2)
-// is employed in the basic interval [0, pi/4].
+// For more information see:
+// https://github.com/golang/go/blob/master/src/math/tan.go
 //
 // Cephes Math Library Release 2.8:  June, 2000
 // Copyright 1984, 1987, 1989, 1992, 2000 by Stephen L. Moshier
