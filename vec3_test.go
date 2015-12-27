@@ -87,10 +87,10 @@ func TestVec3Sub(t *testing.T) {
 
 func testVec3Sub(t *testing.T, sub func(lhs, rhs *Vec3)) {
 	lhs := &Vec3{1, 2, 3}
-	rhs := &Vec3{4, 5, 6}
+	rhs := &Vec3{6, 5, 4}
 
 	sub(lhs, rhs)
-	if !reflect.DeepEqual(lhs, &Vec3{-3, -3, -3}) {
+	if !reflect.DeepEqual(lhs, &Vec3{-5, -3, -1}) {
 		t.Fatalf("Sub wrong result, got: %v", lhs)
 	}
 

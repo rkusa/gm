@@ -41,7 +41,9 @@ TEXT ·subVec3SIMD(SB),NOSPLIT,$0
   SUBPS X1, X0
 
   // save result back into first vector
-  MOVUPS X0, (R8)
+  MOVSS X0, (R8)        // move lower value
+  SHUFPS $0x39, X0, X0  // shift right
+  MOVSD X0, +4(R8)      // move lower two values
   RET
 
 // func divVec3SIMD(lhs *Vec3, rhs float32)
@@ -59,5 +61,7 @@ TEXT ·divVec3SIMD(SB),NOSPLIT,$0
   DIVPS X1, X0
 
   // save result back into vector
-  MOVUPS X0, (R8)
+  MOVSS X0, (R8)        // move lower value
+  SHUFPS $0x39, X0, X0  // shift right
+  MOVSD X0, +4(R8)      // move lower two values
   RET
