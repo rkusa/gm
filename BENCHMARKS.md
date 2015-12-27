@@ -20,8 +20,9 @@ Sub       | 2.83 ns/op
 function | Go             | SIMD
 -------- | -------------- | --------------
 Add      | 4.26 ns/op     | **2.78 ns/op**
+Div      | 5.50 ns/op     | 5.60 ns/op
 Len      | 4.34 ns/op     | **2.77 ns/op**
-Mul      | 2.76 ns/op     | 2.77 ns/op
+Mul      | 3.84 ns/op     | **2.84 ns/op**
 Sub      | 4.28 ns/op     | **2.75 ns/op**
 
 ### Mat4

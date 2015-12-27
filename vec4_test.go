@@ -55,6 +55,48 @@ func benchmarkVec4Add(b *testing.B, add func(lhs, rhs *Vec4)) {
 	}
 }
 
+func TestVec4DivGo(t *testing.T) {
+	testVec4Div(t, divVec4)
+}
+
+func TestVec4DivSIMD(t *testing.T) {
+	testVec4Div(t, divVec4SIMD)
+}
+
+func TestVec4Div(t *testing.T) {
+	testVec4Div(t, func(lhs *Vec4, rhs float32) {
+		lhs.Div(rhs)
+	})
+}
+
+func testVec4Div(t *testing.T, div func(lhs *Vec4, rhs float32)) {
+	lhs := &Vec4{1, 2, 3, 4}
+	var rhs float32 = 2
+	div(lhs, rhs)
+
+	if !reflect.DeepEqual(lhs, &Vec4{.5, 1, 1.5, 2}) {
+		t.Fatalf("Div wrong result, got: %v", lhs)
+	}
+}
+
+func BenchmarkVec4DivGo(b *testing.B) {
+	benchmarkVec4Div(b, divVec4)
+}
+
+func BenchmarkVec4DivSIMD(b *testing.B) {
+	benchmarkVec4Div(b, divVec4SIMD)
+}
+
+func benchmarkVec4Div(b *testing.B, div func(lhs *Vec4, rhs float32)) {
+	lhs := &Vec4{1, 2, 3, 4}
+	var rhs float32 = 2.5
+	b.ResetTimer()
+
+	for n := 0; n < b.N; n++ {
+		div(lhs, rhs)
+	}
+}
+
 func TestVec4LenGo(t *testing.T) {
 	testVec4Len(t, lenVec4)
 }
@@ -101,7 +143,7 @@ func TestVec4MulSIMD(t *testing.T) {
 	testVec4Mul(t, mulVec4SIMD)
 }
 
-func TestVec4(t *testing.T) {
+func TestVec4Mul(t *testing.T) {
 	testVec4Mul(t, func(lhs *Vec4, rhs float32) {
 		lhs.Mul(rhs)
 	})
@@ -110,7 +152,8 @@ func TestVec4(t *testing.T) {
 func testVec4Mul(t *testing.T, mul func(lhs *Vec4, rhs float32)) {
 	lhs := &Vec4{1, 2, 3, 4}
 	var rhs float32 = 2.5
-	lhs.Mul(rhs)
+	mul(lhs, rhs)
+
 	if !reflect.DeepEqual(lhs, &Vec4{2.5, 5, 7.5, 10}) {
 		t.Fatalf("Mul wrong result, got: %v", lhs)
 	}
@@ -130,7 +173,7 @@ func benchmarkVec4Mul(b *testing.B, mul func(lhs *Vec4, rhs float32)) {
 	b.ResetTimer()
 
 	for n := 0; n < b.N; n++ {
-		lhs.Mul(rhs)
+		mul(lhs, rhs)
 	}
 }
 

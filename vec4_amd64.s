@@ -17,6 +17,24 @@ TEXT ·addVec4SIMD(SB),NOSPLIT,$0
   MOVUPS X0, (R8)
   RET
 
+// func divVec4SIMD(lhs *Vec4, rhs float32)
+TEXT ·divVec4SIMD(SB),NOSPLIT,$0
+  // load vector
+  MOVQ lhs+0(FP), R8
+  MOVUPS (R8), X0
+
+  // load scalar
+  MOVSS rhs+8(FP), X1
+  // broadcast the lower element to all four fields
+  SHUFPS $0x00, X1, X1
+
+  // division
+  DIVPS X1, X0
+
+  // save result back into vector
+  MOVUPS X0, (R8)
+  RET
+
 // func lenVec4SIMD(lhs *Vec4) float32
 TEXT ·lenVec4SIMD(SB),NOSPLIT,$0
   // load pointer into register
@@ -53,7 +71,7 @@ TEXT ·mulVec4SIMD(SB),NOSPLIT,$0
   MOVUPS (R8), X0
 
   // load scalar
-  MOVLPS rhs+8(FP), X1
+  MOVSS rhs+8(FP), X1
   // broadcast the lower element to all four fields
   SHUFPS $0x00, X1, X1
 
@@ -63,7 +81,6 @@ TEXT ·mulVec4SIMD(SB),NOSPLIT,$0
   // save result back into vector
   MOVUPS X0, (R8)
   RET
-
 
 // func subVec4SIMD(lhs, rhs *Vec4)
 TEXT ·subVec4SIMD(SB),NOSPLIT,$0
@@ -75,9 +92,10 @@ TEXT ·subVec4SIMD(SB),NOSPLIT,$0
   MOVUPS (R8), X0
   MOVUPS (R9), X1
 
-  // add vector elements
+  // substract vector elements
   SUBPS X1, X0
 
   // save result back into first vector
   MOVUPS X0, (R8)
   RET
+
