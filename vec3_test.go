@@ -15,12 +15,41 @@ func TestVec3Cross(t *testing.T) {
 	}
 }
 
+func TestVec3LenGo(t *testing.T) {
+	testVec3Len(t, lenVec3)
+}
+
+func TestVec3LenSIMD(t *testing.T) {
+	testVec3Len(t, lenVec3SIMD)
+}
+
 func TestVec3Len(t *testing.T) {
+	testVec3Len(t, (*Vec3).Len)
+}
+
+func testVec3Len(t *testing.T, len func(lhs *Vec3) float32) {
 	lhs := &Vec3{1, 2, 3}
-	length := lhs.Len()
+	length := len(lhs)
 
 	if length != 3.7416575 {
 		t.Fatalf("Len wrong result, got: %v", length)
+	}
+}
+
+func BenchmarkVec3LenGo(b *testing.B) {
+	benchmarkVec3Len(b, lenVec3)
+}
+
+func BenchmarkVec3LenSIMD(b *testing.B) {
+	benchmarkVec3Len(b, lenVec3SIMD)
+}
+
+func benchmarkVec3Len(b *testing.B, len func(lhs *Vec3) float32) {
+	lhs := &Vec3{1, 2, 3}
+	b.ResetTimer()
+
+	for n := 0; n < b.N; n++ {
+		len(lhs)
 	}
 }
 

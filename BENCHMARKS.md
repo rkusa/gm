@@ -6,6 +6,7 @@ Benchmarks are done on a MacBook Pro (Early 2015, 2.9GHz Intel Core i5)
 
 function | scalar         | SIMD
 -------- | -------------- | --------------
+Len      | **4.91 ns/op** | 6.18 ns/op
 Sub      | 3.76 ns/op     | **2.77 ns/op**
 
 ### Vec4

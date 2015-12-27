@@ -21,9 +21,15 @@ func (lhs *Vec3) Cross(rhs *Vec3) *Vec3 {
 	return lhs
 }
 
+func lenVec3SIMD(lhs *Vec3) float32
+
+func lenVec3(lhs *Vec3) float32 {
+	return math32.Sqrt(lhs[0]*lhs[0] + lhs[1]*lhs[1] + lhs[2]*lhs[2])
+}
+
 // Len returns the vector length.
 func (lhs *Vec3) Len() float32 {
-	return math32.Sqrt(lhs[0]*lhs[0] + lhs[1]*lhs[1] + lhs[2]*lhs[2])
+	return lenVec3(lhs)
 }
 
 // Norrmalize the vector. Returns itself for function chaining.
