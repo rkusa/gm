@@ -47,5 +47,5 @@ function | math (float64) | math32 (float32)
 Abs      | 12.2 ns/op     | 12.5 ns/op
 Cos      | 26.3 ns/op     | 25.9 ns/op
 Sin      | 26.7 ns/op     | 26.1 ns/op
-Sqrt     | **9.35 ns/op** | 12.4 ns/op [**!?**](https://github.com/rkusa/ml/issues/1)
+Sqrt     | **9.35 ns/op** | 12.4 ns/op [**!?**](https://github.com/rkusa/gm/issues/1)
 Tan      | 30.2 ns/op     | **25.9 ns/op**

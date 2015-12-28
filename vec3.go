@@ -1,6 +1,6 @@
-package ml
+package gm
 
-import "github.com/rkusa/ml/math32"
+import "github.com/rkusa/gm/math32"
 
 type Vec3 [3]float32
 

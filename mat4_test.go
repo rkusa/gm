@@ -1,10 +1,10 @@
-package ml
+package gm
 
 import (
 	"reflect"
 	"testing"
 
-	"github.com/rkusa/ml/math32"
+	"github.com/rkusa/gm/math32"
 )
 
 func TestMat4Identity(t *testing.T) {

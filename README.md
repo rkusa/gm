@@ -1,4 +1,4 @@
-# ml
+# gm
 
 ... incomplete high performacne matrix and vector library (based on float32) using SIMD (at least where SIMD is faster than simple scalar calculations; see benchmarks below)
 
