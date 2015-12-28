@@ -194,3 +194,13 @@ func (lhs *Mat4) Translate(v *Vec3) *Mat4 {
 	lhs[15] = lhs[3]*v[0] + lhs[7]*v[1] + lhs[11]*v[2] + lhs[15]
 	return lhs
 }
+
+func (lhs *Mat4) Transpose() *Mat4 {
+	lhs[1], lhs[4] = lhs[4], lhs[1]
+	lhs[2], lhs[8] = lhs[8], lhs[2]
+	lhs[3], lhs[12] = lhs[12], lhs[3]
+	lhs[6], lhs[9] = lhs[9], lhs[6]
+	lhs[7], lhs[13] = lhs[13], lhs[7]
+	lhs[11], lhs[14] = lhs[14], lhs[11]
+	return lhs
+}

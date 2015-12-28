@@ -38,6 +38,7 @@ LookAt      | 94.4 ns/op
 Perspective | 23.3 ns/op
 Rotate      | 41.1 ns/op
 Translate   | 9.46 ns/op
+Transpose   | 6.34 ns/op
 
 ### Math32 (float32 math)
 
