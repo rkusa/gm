@@ -1,34 +1,15 @@
 # gm
 
-... incomplete high performacne matrix and vector library (based on float32) using SIMD (at least where SIMD is faster than simple scalar calculations; see benchmarks below)
+... (incomplete) high performance matrix and vector library (based on float32) using SIMD for graphics software.
 
 - mutate matrices/vectors in place
-- reimplement (only the ones needed) std math `float32` (instead of converting them to `float64`)
+- reimplement (only the ones needed) std math `float32` (instead of converting values to `float64`)
 - both scalar and SIMD calculations are implemented, but only the faster one is exported
 
-[Benchmarks](BENCHMARKS.md)
+[Documentation](https://godoc.org/github.com/rkusa/gm) | [Benchmarks](BENCHMARKS.md)
 
-## Implemented
-
-Really empty for now; just getting this project started. New functions will be implemented once I need them.
-
-#### Vec3
-
-function | scalar | amd64 | 386 | arm
--------- | ------ | ----- | --- | -----
-Sub      | ✓      | ✓     | ✗   | ✗
-
-#### Vec4
-
-function | scalar | amd64 | 386 | arm
--------- | ------ | ----- | --- | -----
-Add      | ✓      | ✓     | ✗   | ✗
-Mul      | ✓      | ✓     | ✗   | ✗
-
-#### Mat4
-
-function | scalar | amd64 | 386 | arm
--------- | ------ | ----- | --- | -----
-Mul      | ✓      | ✓     | ✗   | ✗
-
+**Status:**
+- SIMD currently only implemented for amd64. Implementations for other architectures will follow soon.
+- Feature set is very incomplete. I am implementing methods once I need them. PRs are welcome (feel also free to kindly ask for missing functions).
+- API may change.
 
