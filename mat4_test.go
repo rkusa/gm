@@ -1,9 +1,10 @@
 package ml
 
 import (
-	"github.com/rkusa/ml/math32"
 	"reflect"
 	"testing"
+
+	"github.com/rkusa/ml/math32"
 )
 
 func TestMat4Identity(t *testing.T) {
@@ -23,6 +24,71 @@ func TestMat4Identity(t *testing.T) {
 	m.Identity()
 	if !reflect.DeepEqual(m, ident) {
 		t.Fatalf("Identity wrong result, got: %v", m)
+	}
+}
+
+func TestMat4InvertGo(t *testing.T) {
+	testMat4Invert(t, invertMat4)
+}
+
+func TestMat4InvertSIMD(t *testing.T) {
+	testMat4Invert(t, invertMat4SIMD)
+}
+
+func TestMat4Invert(t *testing.T) {
+	testMat4Invert(t, func(lhs *Mat4) bool {
+		return lhs.Invert() != nil
+	})
+}
+
+func testMat4Invert(t *testing.T, invert func(lhs *Mat4) bool) {
+	lhs := &Mat4{
+		1, 0, 0, 0,
+		0, 1, 0, 0,
+		0, 0, 1, 0,
+		1, 2, 3, 0,
+	}
+	clone := lhs.Clone()
+
+	if invert(lhs) {
+		t.Fatalf("Invert wrong result, does not break on 0 row")
+	}
+
+	if !reflect.DeepEqual(lhs, clone) {
+		t.Fatalf("Invert should not mutate on 0 row")
+	}
+
+	lhs[15] = 1
+	expectation := &Mat4{
+		1, 0, 0, 0,
+		0, 1, 0, 0,
+		0, 0, 1, 0,
+		-1, -2, -3, 1,
+	}
+
+	if !invert(lhs) {
+		t.Fatalf("Invert should return true if there is no 0 row")
+	}
+
+	if lhs == nil || !mat4Close(lhs, expectation) {
+		t.Fatalf("Invert wrong result, got: %v", lhs)
+	}
+}
+
+func BenchmarkMat4InvertGo(b *testing.B) {
+	benchmarkMat4Invert(b, invertMat4)
+}
+
+func BenchmarkMat4InvertSIMD(b *testing.B) {
+	benchmarkMat4Invert(b, invertMat4SIMD)
+}
+
+func benchmarkMat4Invert(b *testing.B, invert func(lhs *Mat4) bool) {
+	lhs := Mat4Identity()
+	b.ResetTimer()
+
+	for n := 0; n < b.N; n++ {
+		invert(lhs)
 	}
 }
 
@@ -188,4 +254,35 @@ func BenchmarkMat4LookAt(b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		m.LookAt(&eye, center, up)
 	}
+}
+
+func tolerance(a, b, e float32) bool {
+	d := a - b
+	if d < 0 {
+		d = -d
+	}
+
+	// note: b is correct (expected) value, a is actual value.
+	// make error tolerance a fraction of b, not a.
+	if b != 0 {
+		e = e * b
+		if e < 0 {
+			e = -e
+		}
+	}
+	return d < e
+}
+
+func close(a, b float32) bool {
+	return tolerance(a, b, 4e-4)
+}
+
+func mat4Close(lhs, rhs *Mat4) bool {
+	for i := 0; i < 16; i++ {
+		if !close(lhs[i], rhs[i]) {
+			return false
+		}
+	}
+
+	return true
 }

@@ -29,6 +29,7 @@ Sub      | 4.28 ns/op     | **2.75 ns/op**
 
 function | Go             | SIMD
 -------- | -------------- | --------------
+Invert   | 35.6 ns/op     | **16.3 ns/op**
 Mul      | 29.3 ns/op     | **9.34 ns/op**
 
 function    | result
