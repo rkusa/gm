@@ -92,6 +92,32 @@ func benchmarkMat4Invert(b *testing.B, invert func(lhs *Mat4) bool) {
 	}
 }
 
+func TestMat4LookAt(t *testing.T) {
+	eye, center, up := Vec3{3, 3, 3}, Vec3{0, 0, 0}, Vec3{0, 1, 0}
+	m := &Mat4{}
+	m.LookAt(&eye, center, up)
+
+	expectation := &Mat4{
+		0.70710677, -0.4082483, 0.5773503, 0,
+		0, 0.8164966, 0.5773503, 0,
+		-0.70710677, -0.4082483, 0.5773503, 0,
+		0, 0, -5.1961527, 1,
+	}
+	if !reflect.DeepEqual(m, expectation) {
+		t.Fatalf("Translate wrong result, got: %v", m)
+	}
+}
+
+func BenchmarkMat4LookAt(b *testing.B) {
+	eye, center, up := Vec3{3, 3, 3}, Vec3{0, 0, 0}, Vec3{0, 1, 0}
+	m := &Mat4{}
+	b.ResetTimer()
+
+	for n := 0; n < b.N; n++ {
+		m.LookAt(&eye, center, up)
+	}
+}
+
 func TestMat4MulGo(t *testing.T) {
 	testMat4Mul(t, mulMat4)
 }
@@ -227,32 +253,6 @@ func BenchmarkMat4Translate(b *testing.B) {
 
 	for n := 0; n < b.N; n++ {
 		m.Translate(v)
-	}
-}
-
-func TestMat4LookAt(t *testing.T) {
-	eye, center, up := Vec3{3, 3, 3}, Vec3{0, 0, 0}, Vec3{0, 1, 0}
-	m := &Mat4{}
-	m.LookAt(&eye, center, up)
-
-	expectation := &Mat4{
-		0.70710677, -0.4082483, 0.5773503, 0,
-		0, 0.8164966, 0.5773503, 0,
-		-0.70710677, -0.4082483, 0.5773503, 0,
-		0, 0, -5.1961527, 1,
-	}
-	if !reflect.DeepEqual(m, expectation) {
-		t.Fatalf("Translate wrong result, got: %v", m)
-	}
-}
-
-func BenchmarkMat4LookAt(b *testing.B) {
-	eye, center, up := Vec3{3, 3, 3}, Vec3{0, 0, 0}, Vec3{0, 1, 0}
-	m := &Mat4{}
-	b.ResetTimer()
-
-	for n := 0; n < b.N; n++ {
-		m.LookAt(&eye, center, up)
 	}
 }
 
