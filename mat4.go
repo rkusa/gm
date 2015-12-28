@@ -14,7 +14,7 @@ func Mat4Identity() *Mat4 {
 	}
 }
 
-// Clone the matrix.
+// Clone the matrix. Returns itself for function chaining.
 func (lhs *Mat4) Clone() *Mat4 {
 	return &Mat4{
 		lhs[0], lhs[1], lhs[2], lhs[3],
@@ -22,6 +22,16 @@ func (lhs *Mat4) Clone() *Mat4 {
 		lhs[8], lhs[9], lhs[10], lhs[11],
 		lhs[12], lhs[13], lhs[14], lhs[15],
 	}
+}
+
+// Copy values from the given matrix. Returns itself for function chaining.
+func (lhs *Mat4) Copy(rhs *Mat4) *Mat4 {
+	lhs[0], lhs[1], lhs[2], lhs[3] = rhs[0], rhs[1], rhs[2], rhs[3]
+	lhs[4], lhs[5], lhs[6], lhs[7] = rhs[4], rhs[5], rhs[6], rhs[7]
+	lhs[8], lhs[9], lhs[10], lhs[11] = rhs[8], rhs[9], rhs[10], rhs[11]
+	lhs[12], lhs[13], lhs[14], lhs[15] = rhs[12], rhs[13], rhs[14], rhs[15]
+
+	return lhs
 }
 
 func invertMat4SIMD(out *Mat4) bool
