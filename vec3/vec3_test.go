@@ -1,11 +1,11 @@
-package gm
+package vec3
 
 import (
 	"reflect"
 	"testing"
 )
 
-func TestVec3Cross(t *testing.T) {
+func TestCross(t *testing.T) {
 	lhs := &Vec3{1, 2, 3}
 	rhs := &Vec3{4, 5, 6}
 
@@ -15,7 +15,7 @@ func TestVec3Cross(t *testing.T) {
 	}
 }
 
-func BenchmarkVec3Cross(b *testing.B) {
+func BenchmarkCross(b *testing.B) {
 	lhs := &Vec3{1, 1, 1}
 	rhs := &Vec3{1, 1, 1}
 	b.ResetTimer()
@@ -25,7 +25,7 @@ func BenchmarkVec3Cross(b *testing.B) {
 	}
 }
 
-func TestVec3Div(t *testing.T) {
+func TestDiv(t *testing.T) {
 	lhs := &Vec3{1, 2, 3}
 	var rhs float32 = 2
 
@@ -35,7 +35,7 @@ func TestVec3Div(t *testing.T) {
 	}
 }
 
-func BenchmarkVec3Div(b *testing.B) {
+func BenchmarkDiv(b *testing.B) {
 	lhs := &Vec3{1, 1, 1}
 	var rhs float32 = 1
 	b.ResetTimer()
@@ -45,7 +45,7 @@ func BenchmarkVec3Div(b *testing.B) {
 	}
 }
 
-func TestVec3Len(t *testing.T) {
+func TestLen(t *testing.T) {
 	lhs := &Vec3{1, 2, 3}
 	length := lhs.Len()
 
@@ -54,7 +54,7 @@ func TestVec3Len(t *testing.T) {
 	}
 }
 
-func BenchmarkVec3Len(b *testing.B) {
+func BenchmarkLen(b *testing.B) {
 	lhs := &Vec3{1, 2, 3}
 	b.ResetTimer()
 
@@ -63,7 +63,7 @@ func BenchmarkVec3Len(b *testing.B) {
 	}
 }
 
-func TestVec3Normalize(t *testing.T) {
+func TestNormalize(t *testing.T) {
 	lhs := &Vec3{1, 2, 3}
 	lhs.Normalize()
 
@@ -72,7 +72,7 @@ func TestVec3Normalize(t *testing.T) {
 	}
 }
 
-func BenchmarkVec3Normalize(b *testing.B) {
+func BenchmarkNormalize(b *testing.B) {
 	lhs := &Vec3{1, 2, 3}
 	b.ResetTimer()
 
@@ -81,7 +81,7 @@ func BenchmarkVec3Normalize(b *testing.B) {
 	}
 }
 
-func TestVec3Sub(t *testing.T) {
+func TestSub(t *testing.T) {
 	lhs := &Vec3{1, 2, 3}
 	rhs := &Vec3{6, 5, 4}
 
@@ -99,7 +99,7 @@ func TestVec3Sub(t *testing.T) {
 	}
 }
 
-func BenchmarkVec3Sub(b *testing.B) {
+func BenchmarkSub(b *testing.B) {
 	lhs := &Vec3{1, 2, 3}
 	rhs := &Vec3{4, 5, 6}
 	b.ResetTimer()

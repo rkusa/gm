@@ -1,8 +1,12 @@
-package gm
+package vec3
 
 import "github.com/rkusa/gm/math32"
 
 type Vec3 [3]float32
+
+func New(x, y, z float32) *Vec3 {
+	return &Vec3{x, y, z}
+}
 
 // Clone initializes a new Vec3 initialized with values from an existing one.
 func (lhs *Vec3) Clone() *Vec3 {
