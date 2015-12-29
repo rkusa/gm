@@ -1,26 +1,28 @@
 package mat4
 
+// Multiplies two 4x4 matrices (lhs*rhs; using SIMD). Saves result into out.
+func Mul(out, lhs, rhs *Mat4) {
+	mulSIMD(out, lhs, rhs)
+}
+
 // Multiplies two 4x4 matrices (using SIMD). Returns itself for function
 // chaining.
 func (lhs *Mat4) Mul(rhs *Mat4) *Mat4 {
-	mulSIMD(lhs, rhs)
+	Mul(lhs, lhs, rhs)
 	return lhs
 }
 
-func mulSIMD(lhs, rhs *Mat4)
+func mulSIMD(out, lhs, rhs *Mat4)
 
-func mul(out, rhs *Mat4) {
-	// lhs := Mat4{out...}
-	lhs := Mat4{
-		out[0], out[1], out[2], out[3],
-		out[4], out[5], out[6], out[7],
-		out[8], out[9], out[10], out[11],
-		out[12], out[13], out[14], out[15],
-	}
-
-	// if multiplicated with itself
-	if out == rhs {
-		rhs = &lhs
+func mul(out, lhs, rhs *Mat4) {
+	if lhs == out && rhs == out {
+		// if multiplicated with itself
+		lhs = lhs.Clone()
+		rhs = lhs
+	} else if lhs == out {
+		lhs = lhs.Clone()
+	} else if rhs == out {
+		rhs = rhs.Clone()
 	}
 
 	out[0] = lhs[0]*rhs[0] + lhs[4]*rhs[1] + lhs[8]*rhs[2] + lhs[12]*rhs[3]

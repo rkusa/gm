@@ -1,10 +1,11 @@
 #include "textflag.h"
 
-// func mulSIMD(lhs, rhs *Mat4)
+// func mulSIMD(out, lhs, rhs *Mat4)
 TEXT ·mulSIMD(SB),NOSPLIT,$0
   // load pointers into registers
-  MOVQ lhs+0(FP), R8
-  MOVQ rhs+8(FP), R9
+  MOVQ lhs+8(FP), R8 // lhs
+  MOVQ rhs+16(FP), R9 // rhs
+  MOVQ rhs+0(FP), R10 // out
 
   // load lhs into SSE registers
   MOVUPS (R8), X0   // row 1
@@ -40,7 +41,7 @@ TEXT ·mulSIMD(SB),NOSPLIT,$0
   ADDPS X7, X4
 
   // save result row
-  MOVUPS X4, (R8)
+  MOVUPS X4, (R10)
 
   ///  rhs row 2
 
@@ -70,7 +71,7 @@ TEXT ·mulSIMD(SB),NOSPLIT,$0
   ADDPS X7, X4
 
   // save result row
-  MOVUPS X4, 16(R8)
+  MOVUPS X4, 16(R10)
 
   ///  rhs row 3
 
@@ -100,7 +101,7 @@ TEXT ·mulSIMD(SB),NOSPLIT,$0
   ADDPS X7, X4
 
   // save result row
-  MOVUPS X4, 32(R8)
+  MOVUPS X4, 32(R10)
 
   ///  rhs row 4
 
@@ -130,7 +131,7 @@ TEXT ·mulSIMD(SB),NOSPLIT,$0
   ADDPS X7, X4
 
   // save result row
-  MOVUPS X4, 48(R8)
+  MOVUPS X4, 48(R10)
 
   /// done
   RET
