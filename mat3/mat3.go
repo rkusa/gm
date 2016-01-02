@@ -12,6 +12,24 @@ func New(a00, a01, a02, a10, a11, a12, a20, a21, a22 float32) *Mat3 {
 	}
 }
 
+// Clone the matrix. Returns itself for function chaining.
+func (lhs *Mat3) Clone() *Mat3 {
+	return &Mat3{
+		lhs[0], lhs[1], lhs[2],
+		lhs[3], lhs[4], lhs[5],
+		lhs[6], lhs[7], lhs[8],
+	}
+}
+
+// Copy values from the given matrix. Returns itself for function chaining.
+func (lhs *Mat3) Copy(rhs *Mat3) *Mat3 {
+	lhs[0], lhs[1], lhs[2] = rhs[0], rhs[1], rhs[2]
+	lhs[3], lhs[4], lhs[5] = rhs[3], rhs[4], rhs[5]
+	lhs[6], lhs[7], lhs[8] = rhs[6], rhs[7], rhs[8]
+
+	return lhs
+}
+
 // Create a new identity matrix.
 func Identity() *Mat3 {
 	return &Mat3{

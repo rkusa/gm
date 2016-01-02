@@ -8,6 +8,48 @@ import (
 	"github.com/rkusa/gm/vec3"
 )
 
+func TestNew(t *testing.T) {
+	lhs := New(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+	expect := &Mat4{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}
+
+	if !reflect.DeepEqual(lhs, expect) {
+		t.Fatalf("New wrong result, got %v", lhs)
+	}
+}
+
+func TestClone(t *testing.T) {
+	a := New(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+	b := a.Clone()
+
+	if a == b {
+		t.Fatalf("Clone must create a new instance")
+	}
+
+	expect := New(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+	if !reflect.DeepEqual(a, expect) {
+		t.Fatalf("Clone must not change values")
+	}
+
+	if !reflect.DeepEqual(b, expect) {
+		t.Fatalf("Clone must keep values")
+	}
+}
+
+func TestCopy(t *testing.T) {
+	lhs := New(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+	rhs := New(17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32)
+
+	lhs.Copy(rhs)
+
+	if lhs == rhs {
+		t.Fatalf("Copy must keep seperate instances")
+	}
+
+	if !reflect.DeepEqual(rhs, lhs) {
+		t.Fatalf("Copy must keep values, got %v", rhs)
+	}
+}
+
 func TestIdentity(t *testing.T) {
 	ident := &Mat4{
 		1, 0, 0, 0,

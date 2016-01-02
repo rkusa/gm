@@ -5,6 +5,31 @@ import (
 	"testing"
 )
 
+func TestNew(t *testing.T) {
+	lhs := New(1, 2, 3)
+
+	if !reflect.DeepEqual(lhs, &Vec3{1, 2, 3}) {
+		t.Fatalf("New wrong result, got %v", lhs)
+	}
+}
+
+func TestClone(t *testing.T) {
+	a := &Vec3{1, 2, 3}
+	b := a.Clone()
+
+	if a == b {
+		t.Fatalf("Clone must create a new instance")
+	}
+
+	if !reflect.DeepEqual(a, &Vec3{1, 2, 3}) {
+		t.Fatalf("Clone must not change values")
+	}
+
+	if !reflect.DeepEqual(a, b) {
+		t.Fatalf("Clone must keep values")
+	}
+}
+
 func TestCross(t *testing.T) {
 	lhs := &Vec3{1, 2, 3}
 	rhs := &Vec3{4, 5, 6}
