@@ -1,6 +1,10 @@
 package mat4
 
 import (
+	"bytes"
+	"fmt"
+	"text/tabwriter"
+
 	"github.com/rkusa/gm/math32"
 	"github.com/rkusa/gm/vec3"
 )
@@ -92,14 +96,35 @@ func (lhs *Mat4) Perspective(fovy, aspect, near, far float32) *Mat4 {
 
 // Rotate rotates the matrix by the given angle around the given axis. Returns
 // itself for function chaining.
-func (lhs *Mat4) Rotate(rad float32, axis *vec3.Vec3) *Mat4 {
-	x, y, z := axis[0], axis[1], axis[2]
-	s, c := math32.Sin(rad), math32.Cos(rad)
-	t := 1 - c
+func (lhs *Mat4) Rotate(x, y, z float32) *Mat4 {
+	var a, b, c, d, e, f float32
 
-	lhs[0], lhs[1], lhs[2] = x*x*t+c, x*y*t+z*s, x*z*t-y*s
-	lhs[4], lhs[5], lhs[6] = x*y*t-z*s, y*y*t+c, y*z*t+x*s
-	lhs[8], lhs[9], lhs[10] = x*z*t+y*s, y*z*t-x*s, z*z*t+c
+	if x != 0 {
+		a = math32.Cos(x)
+		b = math32.Sin(x)
+	} else {
+		a, b = 1, 0
+	}
+
+	if y != 0 {
+		c = math32.Cos(y)
+		d = math32.Sin(y)
+	} else {
+		c, d = 1, 0
+	}
+
+	if z != 0 {
+		e = math32.Cos(z)
+		f = math32.Sin(z)
+	} else {
+		e, f = 1, 0
+	}
+
+	ad, bd := a*d, b*d
+
+	lhs[0], lhs[1], lhs[2] = c*e, bd*e+a*f, -ad*e+b*f
+	lhs[4], lhs[5], lhs[6] = -c*f, -bd*f+a*e, ad*f+b*e
+	lhs[8], lhs[9], lhs[10] = d, -b*c, a*c
 
 	return lhs
 }
@@ -123,4 +148,19 @@ func (lhs *Mat4) Transpose() *Mat4 {
 	lhs[7], lhs[13] = lhs[13], lhs[7]
 	lhs[11], lhs[14] = lhs[14], lhs[11]
 	return lhs
+}
+
+// String pretty prints the matrix (for debugging purposes).
+func (lhs Mat4) String() string {
+	buf := new(bytes.Buffer)
+	w := tabwriter.NewWriter(buf, 4, 4, 1, ' ', tabwriter.AlignRight)
+	for i := 0; i < 4; i++ {
+		fmt.Fprintf(w, "%v\t", lhs[i])
+		fmt.Fprintf(w, "%v\t", lhs[i+4])
+		fmt.Fprintf(w, "%v\t", lhs[i+8])
+		fmt.Fprintf(w, "%v\t\n", lhs[i+12])
+	}
+	w.Flush()
+
+	return buf.String()
 }
