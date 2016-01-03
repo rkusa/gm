@@ -127,9 +127,10 @@ func TestRotate(t *testing.T) {
 		0, 0, 1, 0,
 		1, 2, 3, 1,
 	}
-	rot := math32.Pi / 2
-	a := math32.Cos(rot)
-	b := math32.Sin(rot)
+	theta := math32.Pi / 2
+	rot := vec3.New(theta, 0, 0)
+	a := math32.Cos(theta)
+	b := math32.Sin(theta)
 
 	x := &Mat4{
 		1, 0, 0, 0,
@@ -138,7 +139,7 @@ func TestRotate(t *testing.T) {
 		1, 2, 3, 1,
 	}
 	lhs := mat.Clone()
-	lhs.Rotate(rot, 0, 0)
+	lhs.Rotate(rot)
 
 	if !reflect.DeepEqual(lhs, x) {
 		t.Fatalf("Rotate X wrong result, got: %v %v", lhs, x)
@@ -151,7 +152,8 @@ func TestRotate(t *testing.T) {
 		1, 2, 3, 1,
 	}
 	lhs = mat.Clone()
-	lhs.Rotate(0, rot, 0)
+	rot = vec3.New(0, theta, 0)
+	lhs.Rotate(rot)
 
 	if !reflect.DeepEqual(lhs, y) {
 		t.Fatalf("Rotate Y wrong result,\ngot:\n%vexpected:\n%v", lhs, y)
@@ -164,7 +166,8 @@ func TestRotate(t *testing.T) {
 		1, 2, 3, 1,
 	}
 	lhs = mat.Clone()
-	lhs.Rotate(0, 0, rot)
+	rot = vec3.New(0, 0, theta)
+	lhs.Rotate(rot)
 
 	if !reflect.DeepEqual(lhs, z) {
 		t.Fatalf("Rotate Z wrong result,\ngot:\n%vexpected:\n%v", lhs, z)
@@ -173,11 +176,11 @@ func TestRotate(t *testing.T) {
 
 func BenchmarkRotate(b *testing.B) {
 	m := Identity()
-	rot := math32.Pi / 2
+	rot := vec3.New(math32.Pi/2, 0, 0)
 	b.ResetTimer()
 
 	for n := 0; n < b.N; n++ {
-		m.Rotate(rot, 0, 0)
+		m.Rotate(rot)
 	}
 }
 

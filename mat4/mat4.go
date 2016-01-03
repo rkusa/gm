@@ -94,28 +94,27 @@ func (lhs *Mat4) Perspective(fovy, aspect, near, far float32) *Mat4 {
 	return lhs
 }
 
-// Rotate rotates the matrix by the given angle around the given axis. Returns
-// itself for function chaining.
-func (lhs *Mat4) Rotate(x, y, z float32) *Mat4 {
+// Rotate the matrix by the given angles (x, y, z; in radians). Returns itself.
+func (lhs *Mat4) Rotate(rot *vec3.Vec3) *Mat4 {
 	var a, b, c, d, e, f float32
 
-	if x != 0 {
-		a = math32.Cos(x)
-		b = math32.Sin(x)
+	if rot[0] != 0 {
+		a = math32.Cos(rot[0])
+		b = math32.Sin(rot[0])
 	} else {
 		a, b = 1, 0
 	}
 
-	if y != 0 {
-		c = math32.Cos(y)
-		d = math32.Sin(y)
+	if rot[1] != 0 {
+		c = math32.Cos(rot[1])
+		d = math32.Sin(rot[1])
 	} else {
 		c, d = 1, 0
 	}
 
-	if z != 0 {
-		e = math32.Cos(z)
-		f = math32.Sin(z)
+	if rot[2] != 0 {
+		e = math32.Cos(rot[2])
+		f = math32.Sin(rot[2])
 	} else {
 		e, f = 1, 0
 	}
