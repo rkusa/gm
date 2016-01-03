@@ -36,7 +36,7 @@ function    | result
 ----------- | ----------
 LookAt      | 94.4 ns/op
 Perspective | 23.3 ns/op
-Rotate      | 35.4 ns/op
+Rotation    | 35.4 ns/op
 Translate   | 9.46 ns/op
 Transpose   | 6.34 ns/op
 

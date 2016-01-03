@@ -120,13 +120,8 @@ func BenchmarkPerspective(b *testing.B) {
 	}
 }
 
-func TestRotate(t *testing.T) {
-	mat := &Mat4{
-		1, 0, 0, 0,
-		0, 1, 0, 0,
-		0, 0, 1, 0,
-		1, 2, 3, 1,
-	}
+func TestRotation(t *testing.T) {
+	mat := New(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
 	theta := math32.Pi / 2
 	rot := vec3.New(theta, 0, 0)
 	a := math32.Cos(theta)
@@ -136,51 +131,51 @@ func TestRotate(t *testing.T) {
 		1, 0, 0, 0,
 		0, a, b, 0,
 		0, -b, a, 0,
-		1, 2, 3, 1,
+		0, 0, 0, 1,
 	}
 	lhs := mat.Clone()
-	lhs.Rotate(rot)
+	lhs.Rotation(rot)
 
 	if !reflect.DeepEqual(lhs, x) {
-		t.Fatalf("Rotate X wrong result, got: %v %v", lhs, x)
+		t.Fatalf("Rotation X wrong result, got: %v %v", lhs, x)
 	}
 
 	y := &Mat4{
 		a, 0, -b, 0,
 		0, 1, 0, 0,
 		b, 0, a, 0,
-		1, 2, 3, 1,
+		0, 0, 0, 1,
 	}
 	lhs = mat.Clone()
 	rot = vec3.New(0, theta, 0)
-	lhs.Rotate(rot)
+	lhs.Rotation(rot)
 
 	if !reflect.DeepEqual(lhs, y) {
-		t.Fatalf("Rotate Y wrong result,\ngot:\n%vexpected:\n%v", lhs, y)
+		t.Fatalf("Rotation Y wrong result,\ngot:\n%vexpected:\n%v", lhs, y)
 	}
 
 	z := &Mat4{
 		a, b, 0, 0,
 		-b, a, 0, 0,
 		0, 0, 1, 0,
-		1, 2, 3, 1,
+		0, 0, 0, 1,
 	}
 	lhs = mat.Clone()
 	rot = vec3.New(0, 0, theta)
-	lhs.Rotate(rot)
+	lhs.Rotation(rot)
 
 	if !reflect.DeepEqual(lhs, z) {
-		t.Fatalf("Rotate Z wrong result,\ngot:\n%vexpected:\n%v", lhs, z)
+		t.Fatalf("Rotation Z wrong result,\ngot:\n%vexpected:\n%v", lhs, z)
 	}
 }
 
-func BenchmarkRotate(b *testing.B) {
+func BenchmarkRotation(b *testing.B) {
 	m := Identity()
 	rot := vec3.New(math32.Pi/2, 0, 0)
 	b.ResetTimer()
 
 	for n := 0; n < b.N; n++ {
-		m.Rotate(rot)
+		m.Rotation(rot)
 	}
 }
 

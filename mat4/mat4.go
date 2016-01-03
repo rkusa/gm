@@ -94,8 +94,9 @@ func (lhs *Mat4) Perspective(fovy, aspect, near, far float32) *Mat4 {
 	return lhs
 }
 
-// Rotate the matrix by the given angles (x, y, z; in radians). Returns itself.
-func (lhs *Mat4) Rotate(rot *vec3.Vec3) *Mat4 {
+// Rotation creates a rotation matrix by the given angles (x, y, z; in
+// radians). Returns itself.
+func (lhs *Mat4) Rotation(rot *vec3.Vec3) *Mat4 {
 	var a, b, c, d, e, f float32
 
 	if rot[0] != 0 {
@@ -124,6 +125,9 @@ func (lhs *Mat4) Rotate(rot *vec3.Vec3) *Mat4 {
 	lhs[0], lhs[1], lhs[2] = c*e, bd*e+a*f, -ad*e+b*f
 	lhs[4], lhs[5], lhs[6] = -c*f, -bd*f+a*e, ad*f+b*e
 	lhs[8], lhs[9], lhs[10] = d, -b*c, a*c
+
+	lhs[3], lhs[7], lhs[11] = 0, 0, 0
+	lhs[12], lhs[13], lhs[14], lhs[15] = 0, 0, 0, 1
 
 	return lhs
 }
