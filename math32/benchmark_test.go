@@ -43,6 +43,14 @@ func BenchmarkCosFloat32(b *testing.B) {
 	}
 }
 
+func BenchmarkCosFloat32Go(b *testing.B) {
+	count := len(vf)
+
+	for n := 0; n < b.N; n++ {
+		result = CosGo(vf[n%count])
+	}
+}
+
 func BenchmarkSinFloat64(b *testing.B) {
 	count := len(vf)
 
@@ -56,6 +64,14 @@ func BenchmarkSinFloat32(b *testing.B) {
 
 	for n := 0; n < b.N; n++ {
 		result = Sin(vf[n%count])
+	}
+}
+
+func BenchmarkSinFloat32Go(b *testing.B) {
+	count := len(vf)
+
+	for n := 0; n < b.N; n++ {
+		result = SinGo(vf[n%count])
 	}
 }
 
@@ -88,5 +104,13 @@ func BenchmarkTanFloat32(b *testing.B) {
 
 	for n := 0; n < b.N; n++ {
 		result = Tan(vf[n%count])
+	}
+}
+
+func BenchmarkTanFloat32Go(b *testing.B) {
+	count := len(vf)
+
+	for n := 0; n < b.N; n++ {
+		result = TanGo(vf[n%count])
 	}
 }

@@ -170,3 +170,6 @@ func sin(x float32) float32 {
 	}
 	return y
 }
+
+var SinGo = sin
+var CosGo = cos

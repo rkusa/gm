@@ -106,3 +106,5 @@ func tan(x float32) float32 {
 	}
 	return y
 }
+
+var TanGo = tan
