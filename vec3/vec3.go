@@ -39,6 +39,14 @@ func (lhs *Vec3) Len() float32 {
 	return math32.Sqrt(lhs[0]*lhs[0] + lhs[1]*lhs[1] + lhs[2]*lhs[2])
 }
 
+// Multiply the vector with a scalar. Returns itself.
+func (lhs *Vec3) Mul(rhs float32) *Vec3 {
+	lhs[0] *= rhs
+	lhs[1] *= rhs
+	lhs[2] *= rhs
+	return lhs
+}
+
 // Norrmalize the vector. Returns itself for function chaining.
 func (lhs *Vec3) Normalize() *Vec3 {
 	lhs.Div(lhs.Len())

@@ -88,6 +88,26 @@ func BenchmarkLen(b *testing.B) {
 	}
 }
 
+func TestMul(t *testing.T) {
+	lhs := &Vec3{2, 3, 4}
+	var rhs float32 = 2
+
+	lhs.Mul(rhs)
+	if !reflect.DeepEqual(lhs, &Vec3{4, 6, 8}) {
+		t.Fatalf("Mul wrong result, got: %v", lhs)
+	}
+}
+
+func BenchmarkMul(b *testing.B) {
+	lhs := &Vec3{1, 1, 1}
+	var rhs float32 = 1
+	b.ResetTimer()
+
+	for n := 0; n < b.N; n++ {
+		lhs.Mul(rhs)
+	}
+}
+
 func TestNormalize(t *testing.T) {
 	lhs := &Vec3{1, 2, 3}
 	lhs.Normalize()
