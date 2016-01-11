@@ -75,6 +75,25 @@ func BenchmarkSinFloat32Go(b *testing.B) {
 	}
 }
 
+func BenchmarkSincosFloat64(b *testing.B) {
+	count := len(vf)
+	var s, c float64
+
+	for n := 0; n < b.N; n++ {
+		s, c = math.Sincos(float64(vf[n%count]))
+		result = float32(s)
+		result = float32(c)
+	}
+}
+
+func BenchmarkSincosFloat32(b *testing.B) {
+	count := len(vf)
+
+	for n := 0; n < b.N; n++ {
+		result, _ = Sincos(vf[n%count])
+	}
+}
+
 func BenchmarkSqrtFloat64(b *testing.B) {
 	count := len(vf)
 

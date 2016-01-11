@@ -292,6 +292,14 @@ func TestSin(t *testing.T) {
 	}
 }
 
+func TestSincos(t *testing.T) {
+	for i := 0; i < len(vf); i++ {
+		if s, c := Sincos(vf[i]); !veryclose(sin[i], s) || !veryclose(cos[i], c) {
+			t.Errorf("Sincos(%g) = %g, %g want %g, %g", vf[i], s, c, sin[i], cos[i])
+		}
+	}
+}
+
 func TestSqrt(t *testing.T) {
 	for i := 0; i < len(vf); i++ {
 		// a := Abs(vf[i])
