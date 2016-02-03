@@ -1,5 +1,3 @@
-// +build !386
-
 package mat4
 
 func invert(out *Mat4) bool {
