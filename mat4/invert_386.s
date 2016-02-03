@@ -22,7 +22,7 @@ TEXT ·invertSIMD386(SB), NOSPLIT, $0
   MOVL lhs+0(FP), AX
 
   // temporary values
-  MOVL lhs+8(FP), BX
+  MOVL lhs+4(FP), BX
 
   // tmp1
   MOVUPS (AX), X5          // lhs0 -> tmp
@@ -282,7 +282,7 @@ TEXT ·invertSIMD386(SB), NOSPLIT, $0
   MOVL    BX, X6
   UCOMISS X6, X4
   JNZ     result        // jump if not zero
-  MOVB    $0, ret+4(FP) // return false
+  MOVB    $0, ret+8(FP) // return false
   RET
 
 result:
@@ -318,5 +318,5 @@ result:
   // ---------------------------------------
 
   MOVB $1, CL
-  MOVB CL, ret+4(FP) // return true
+  MOVB CL, ret+8(FP) // return true
   RET
