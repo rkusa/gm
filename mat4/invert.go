@@ -1,5 +1,15 @@
 package mat4
 
+// Invert the matrix. Returns nil if inversion is not possible due to a zero
+// row; otherwise, return itself for function chaining.
+func (lhs *Mat4) Invert() *Mat4 {
+	if !invertSIMD(lhs) {
+		return nil
+	}
+
+	return lhs
+}
+
 func invert(out *Mat4) bool {
 	lhs := Mat4{
 		out[0], out[1], out[2], out[3],
