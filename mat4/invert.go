@@ -10,8 +10,6 @@ func (lhs *Mat4) Invert() *Mat4 {
 	return lhs
 }
 
-func invertSIMD(out *Mat4) bool
-
 func invert(out *Mat4) bool {
 	lhs := Mat4{
 		out[0], out[1], out[2], out[3],
